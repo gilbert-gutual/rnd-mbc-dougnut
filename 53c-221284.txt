@@ -1,0 +1,3701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<survey 
+  alt="[R&amp;D] QUO-1503566-G6W3 - Factworks - B2C + C2C shopper"
+  autosaveKey="ot,psid,rnid,ID"
+  browserDupes=""
+  builder:wizardCompleted="1"
+  builderCompatible="1"
+  compat="147"
+  delphi="1"
+  displayOnError="all"
+  extraVariables="source,record,ipAddress,decLang,list,userAgent,settings,jumpto"
+  featurephoneNotAllowedMessage="The device you are using is not allowed to take this survey."
+  fir="on"
+  firCheckboxSelected="check-square"
+  firStyle="square"
+  fixedWidth="tight"
+  html:showNumber="0"
+  markerTimeout="0"
+  mobile="compat"
+  mobileDevices="smartphone,tablet,desktop"
+  name="Survey"
+  persistentExit="1"
+  precision="10"
+  remerged="20220328_17:06"
+  secure="1"
+  setup="term,decLang,quota,time"
+  spssSimpleCheckbox="1"
+  ss:disableBackButton="1"
+  ss:enableNavigation="0"
+  ss:hideProgressBar="0"
+  ss:includeJS="/survey/selfserve/rnstarlib/res/rnjslib.js?imgsecurity=${'none' if str(gv.survey.root.state) == 'testing' else 'standard'}"
+  ss:listDisplay="1"
+  ss:logoAlt="Logo"
+  ss:logoFile="selfserve/53c/logo_7b490c75a6e0691ec8b6646f8c6c2dd4.png"
+  ss:logoPosition="left"
+  ss:showBackButton="0"
+  state="testing"
+  theme="frozen:company/factworks"
+  version="65">
+
+<res label="sys_continue">Next</res>
+<res label="BeginButton">BEGIN</res>
+<res label="FinishButton">FINISH</res>
+<style mode="after" name="respview.client.js"><![CDATA[
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css" />
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="//surveyfiles.dynata.com/rnd/migration/2021/popups/jquery.easing-1.3.pack.js"></script>
+<script type="text/javascript">
+$ ( document ).ready(function() {
+
+//Allows the respondent to click the row-legend on no col questions
+if ($ (".grid-list-mode").length==0) {
+    $ ('.checkbox.noCols .element').each(function() {
+      if ($ (this).find("input[type='checkbox']").prop("checked")) {
+        $ (this).addClass("checked")
+      }
+    });
+    $ ('.checkbox.noCols .element ').each(function() {
+
+    });
+
+  $ ('.radio.noCols .element').add($ (".answers .exclusive").closest(".element")).on("click", function() {
+    var thisElem = $ (this);
+
+    // add delay to make sure that element status is already updated (checked or not)
+    setTimeout(function() {
+      thisElem.find("input:radio, input:checkbox").is(":checked") && thisElem.siblings().find(".input.text-input").val('');
+    }, 100);
+  });
+
+  $ (".answers .no-answer").on("change", function() {
+    var thisElem = $ (this);
+    thisElem.closest(".row-no-answer").siblings(".row-no-answer").find("td.element .cell-sub-wrapper").toggle(!thisElem.is(":checked"));
+  });
+
+  $ ('.radio.noCols .element').addClass('survey-q-grid-cell-clickable').click(function (e) {
+    var $ans = $ (this).parents(".answers")
+    if ($ (this).hasClass("checked")) {
+      $ans.find("input[type='radio']").checked = false;
+      $ans.find(".fir-icon").removeClass("selected")
+      $ (this).removeClass("checked")
+
+    }
+    else {
+      $ans.find("input[type='radio']").checked = false;
+      $ans.find(".fir-icon").removeClass("selected");
+      $ans.find('.element').removeClass("checked");
+      $ (this).addClass("checked")
+      $ (this).find("input[type='radio']").attr("checked",true)
+      $ (this).find("input[type='radio']").closest("span").find(".fir-icon").addClass("selected");
+    }
+    e.preventDefault()
+  });
+
+ }
+
+
+ 
+  $ (".grid-multi-col input[type='checkbox']").on("change", function() {
+    if ($ (this).attr("checked")) {
+      $ (this).parents(".row-elements").addClass("checked");
+    }
+    else {
+      $ (this).parents(".row-elements").removeClass("checked");
+    }   
+  });
+  $ ('.checkbox.noCols .element, .checkbox .grid-list-mode .row-elements .element').addClass('survey-q-grid-cell-clickable').click(function (e) {
+    if ($ (".multicol").length == 0) {
+      if ($ (".grid-list-mode").length) {
+        var $rowEl = $ (this).parents(".row-elements");
+        if ($ (this).hasClass("checked")) {
+        $ (this).find("input[type='checkbox']").attr("checked",false);
+        $ (this).find("input[type='checkbox']").closest("span").find(".fir-icon").removeClass("selected");
+        $ (this).removeClass("checked");
+        }
+        else {
+          if ($ (this).find("input[type='checkbox']").hasClass("exclusive")) {
+            $rowEl.find("input[type='checkbox']").attr("checked",false);
+            $rowEl.find("input[type='checkbox']").closest("span").find(".fir-icon").removeClass("selected");
+            $rowEl.find('.element').removeClass("checked");
+          }
+          else {
+            $rowEl.find("input[type='checkbox'].exclusive").attr("checked",false);
+            $rowEl.find("input[type='checkbox'].exclusive").closest("span").find(".fir-icon").removeClass("selected");
+            $rowEl.find("input[type='checkbox'].exclusive").parents(".element").removeClass("checked")
+          }
+
+          $ (this).addClass("checked");
+          $ (this).find("input[type='checkbox']").attr("checked",true);
+          $ (this).find("input[type='checkbox']").closest("span").find(".fir-icon").addClass("selected");
+        }
+    }
+
+  else {
+    if ($ (this).hasClass("checked")) {
+      $ (this).find("input[type='checkbox']").attr("checked",false);
+      $ (this).find("input[type='checkbox']").trigger("change");
+      $ (this).find("input[type='checkbox']").closest("span").find(".fir-icon").removeClass("selected");
+      $ (this).removeClass("checked")
+    }
+    else {
+      if ($ (this).find("input[type='checkbox']").hasClass("exclusive")) {
+        $ ("input[type='checkbox']").attr("checked",false);
+        $ ("input[type='checkbox']").closest("span").find(".fir-icon").removeClass("selected");
+        $ ('.checkbox.noCols .element').removeClass("checked")
+      }
+      else {
+        $ ("input[type='checkbox'].exclusive").attr("checked",false);
+        $ ("input[type='checkbox'].exclusive").closest("span").find(".fir-icon").removeClass("selected");
+        $ ("input[type='checkbox'].exclusive").parent().parent().parent(".element").removeClass("checked")
+      }
+
+      $ (this).addClass("checked")
+      $ (this).find("input[type='checkbox']").attr("checked",true);
+      $ (this).find("input[type='checkbox']").closest("span").find(".fir-icon").addClass("selected");
+      }
+    }
+  }
+  e.preventDefault()
+});
+
+
+
+$ ('.radio .grid-list-mode .element').addClass('survey-q-grid-cell-clickable').click(function (e) {
+  var $ans = $ (this).parents(".answers")
+  checkAnswers($ans);
+});
+
+//check answers
+function checkAnswers($ans) {
+  $ans.find('input[type="radio"]').each(function(){
+    if ($ (this).prop("checked")) {
+      $ (this).parents('.element').addClass('checked');
+    } else {
+      $ (this).parents('.element').removeClass('checked');
+    }
+  })
+}
+
+
+
+$ ('.number .element .input.no-answer').on("change",function() {
+  if ($ (this)[0].checked) {
+    $ ($ (this)[0]).parent().parent().parent().addClass('checked');
+    setTimeout(function () {
+      // $ (".number input[type='text']").attr("disabled",false);
+      $ (".number input[type='text'], .number input[type='number']").prop("disabled", false).val('');
+    },100)
+  } else {
+    $ ($ (this)[0]).parent().parent().parent().removeClass('checked');
+  }
+});
+
+//$ (".number input[type='text']").on("focus",function() {
+$ (".number input[type='text'], .number input[type='number']").on("keyup",function() {
+  if( $ (this).val().trim()!="" ) {
+    $ (".number").find('.element .input.no-answer').attr("checked",false)
+    $ (".number").find('.element .input.no-answer').parent().find(".fir-icon").removeClass("selected")
+  }
+});
+
+$ ('.element .input.no-answer').on("change",function() {
+  if ($ (this)[0].checked) {
+    setTimeout(function () {
+      $ ("select").attr("disabled",false)
+    },500)
+  }
+});
+$ (".select select").on("change",function() {
+  if ($ (this).val() != "-1") {
+    $ (".select").find('.element .input.no-answer').attr("checked",false)
+    $ (".select").find('.element .input.no-answer').parent().find(".fir-icon").removeClass("selected")
+  }
+
+});
+
+setTimeout(function() {
+
+//Vertically central align the item
+$ ('.sq-ranksort-card').each(function(index) {
+	var top=($ (this).height() - $ ('.sq-ranksort-card-text',$ (this)).height())/2;
+	var cardId = $ (this).attr('id');
+	var styleStr ="#survey .sq-ranksort-container .sq-ranksort-cards #"+cardId+" .sq-ranksort-card-text {top:"+top+"px !important;}"
+	addCustomStyles(styleStr, "ranksort");
+	//console.log(index,'=>',$ ('.sq-ranksort-card-text',$ (this)).height(),$ (this).height(),top);
+ }); 
+
+  var maxHeight = [];
+  if ($ (".question .grid-table-mode .row-elements").length) {
+    $ (".question .grid-table-mode .row-elements").each(function(idx) {
+      maxHeight[idx] = parseInt($ (this).height())
+    })
+    $ (".question .grid-table-mode .row-elements").height(Math.max.apply(this,maxHeight));
+  }
+},500);
+
+});
+
+function addCustomStyles(styleStr, styleTagId){
+            var styleId = "customStyle_" + styleTagId;
+
+            if(!document.getElementById(styleId)){
+                //style tag doesn't exist
+                var styleElm = document.createElement('style');
+                styleElm.type = 'text/css';
+                styleElm.id = styleId;
+                var styleTages = (document.getElementsByTagName('style').length > 0)?document.getElementsByTagName('style'): document.querySelectorAll('link[rel="stylesheet"]');
+                insertStyleTag(styleTages[styleTages.length-1],styleElm);
+            }
+            document.getElementById(styleId).textContent += styleStr;
+}
+function insertStyleTag(referenceNode, newNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+</script>
+]]></style>
+<style mode="after" name="respview.client.css"><![CDATA[
+<style type="text/css">
+
+
+/*** ADDED STYLING TO ADD SPACE ABOVE NONE/OTHER/DK OPTIONS ***/
+
+.spacer {margin-top: 25px; }
+
+.mobile.mobile-spacer {margin-top: 15px; }
+
+
+/*** END OF ADDED STYLING ***/
+
+
+
+.autosave-restart {
+    display: none;
+}
+.grid-desktop-mode .col-legend {
+    vertical-align: bottom;
+}
+
+.grid-list-mode[data-settings*='single-col'] .row-no-answer .cell-text { display: table-cell; }
+
+\@media screen and (min-width: 960px){
+.answers-list {
+    width: 100%;
+}
+}
+          
+\@media screen and (max-width: 800px) and (min-width: 650px){
+.question-text img, .answers-list img, .comment-text img{
+max-width: 600px;
+}
+}
+\@media screen and (max-width: 649px) and (min-width: 350px){
+.question-text img, .answers-list img, .comment-text img{
+max-width: 200px;
+}
+}
+\@media screen and (max-width: 349px){
+.question-text img, .answers-list img, .comment-text img{
+max-width: 150px;
+}
+}
+
+div#fancybox-wrap{
+    padding: 0px;
+}
+
+/*****************css added for Factworks*****/
+
+\@font-face {
+  font-family: Lato-regular;
+  src: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/font/Lato-Regular.ttf) format("truetype");
+}
+\@font-face {
+  font-family: Lato-medium;
+  src: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/font/Lato-Medium.ttf) format("truetype");
+}
+\@font-face {
+  font-family: Lato-bold;
+  src: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/font/Lato-Medium.ttf) format("truetype");
+}
+
+
+
+.survey-header {
+  margin-top: -30px;
+  margin-bottom: 8px;
+  min-height: 2px;
+}
+\@media screen and (max-width: 480px){
+.survey-header {
+  margin-top: -50px;
+}
+}
+.question-text {
+  font-family: Lato-medium;
+  color: #000028;
+  line-height: normal;
+  margin-bottom: .333em;
+  font-size: 1.6rem;/*30pt*/
+}
+.instruction-text {
+  font-family: Lato-regular;
+  color: #78919b;
+  font-size: 1.2rem;/*24pt*/
+}
+
+/* item options */
+.ssi-gender-container .ssi-gender-label {
+    font-family: Lato-regular;
+    color: #000028;
+    font-size: 1.4rem;/*24pt*/
+}
+
+.answers {
+  font-family: Lato-regular;
+  font-size: 1.2rem;
+}
+
+\@media only screen and (max-width: 768px){
+  .question-text {
+    font-family: Lato-medium;
+    color: #000028;
+    font-size: 1.4rem;/*20pt*/
+  }
+  .instruction-text {
+    font-family: Lato-regular;
+    color: #78919B;
+    font-size: 1rem;/*18pt*/
+  }
+
+  /* item options */
+  .ssi-gender-container .ssi-gender-label {
+      font-family: Lato-regular;
+      color: #000028;
+      font-size: 1rem;/*18pt*/
+  }
+}
+
+
+
+
+/* Page layout */
+
+.survey-page {
+   /*background-image: url(//ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/BackgroundLightBlueDesktop.png)!important;*/
+   width: 100%;
+   height: 100% !important;
+   margin: 0px; 
+   /*background-color:#0f24a4;
+   background-color:#f4f9ff;*/ 
+   background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+\@media only screen and (min-width: 600px){
+.survey-page {
+  background-image: url(//ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/BackgroundLightBlueDesktop.png)!important;
+  background-color:#f4f9ff;
+ }
+}
+.survey-body{
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    /*background-color: transparent;*/  
+    padding-bottom: 100px;
+}
+.question{
+ /*background-color: transparent;*/ 
+  margin-top: 0;
+}
+
+
+\@media (min-width:768px) {
+    .survey-body {
+        padding: 75px 65px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        min-width: 80%;
+        /*width: 80%;*/
+        min-height: 576px;
+        margin-top: 100px;
+        max-width:1200px;
+        margin:25px auto;
+    }
+    .question,
+    .comment {
+        
+    }
+}
+
+\@media only screen and (max-width: 490px) {
+    .survey-body {
+        padding: 12px 8px;
+        margin:25px auto;
+    }
+    .progress-box-outer {
+        height:10px !important;
+        margin-left:0px;
+    }
+}
+\@media only screen and (min-width: 768px){
+  .progress-bar {
+      text-align: left;
+      position: absolute;
+      bottom: 40px;
+      width: 65%;
+  }
+  .progress-text {
+    display: inline-block;
+  }
+  .survey-buttons {
+    margin-right: -25px;
+  }
+}
+.progress-box-outer {
+    background-color: #e2f2ff;
+    border-radius: 7px;
+    /*
+    width: 85%;
+    max-width: calc(100% - 4em);
+    */
+    text-align: right;
+    height: .8em;
+    display: inline-block;
+    border: none;
+}
+.progress-text {
+    color: #b5bac7;
+    font-family: Lato-regular;
+    font-size: 1rem;
+    line-height: 1em;
+    padding-left: .5em;
+}
+.progress-box-completed {
+    background-color: #00ABFF;
+    height: 100%;
+    display: block;
+    border-radius: 7px;
+}
+
+
+
+
+/**** answer options and buttons ****/
+
+.fir-icon.selected .rounded .fir-base, .fir-icon.selected .square .fir-base{
+ fill: #00abff;
+}
+.question.checkbox .fir-icon.selected .rounded .fir-bg,
+.question.checkbox .fir-icon.selected .square .fir-bg {
+ fill: #00abff;
+}
+.question.checkbox .fir-icon.selected .rounded .fir-selected,
+.question.checkbox .fir-icon.selected .square .fir-selected {
+ fill: #fff; 
+}
+.sq-atm1d .sq-atm1d-button {
+ min-width: 62%;
+ border-radius: 5px;
+ background: #F5F6FA;
+ border-color: transparent;
+}
+.sq-atm1d-vertical .sq-atm1d-button .sq-atm1d-legend{
+ color:#000028;
+}
+.sq-atm1d .sq-atm1d-selected,.sq-atm1d .sq-atm1d-hovered { 
+    background-color: #E2F2FF;
+    color: #00abff;
+}
+.sq-atm1d-widget .sq-atm1d-icon {
+  color: #ccc;
+}
+.sq-atm1d .sq-atm1d-selected .sq-atm1d-icon, .sq-atm1d .sq-atm1d-hovered .sq-atm1d-icon{
+  color: #00abff;
+}
+.sq-atm1d .sq-atm1d-legend .legend-text, .sq-atm1d .sq-atm1d-hovered .sq-atm1d-legend .legend-text{
+ margin-top:0px;
+ font-family: Lato-regular;
+}
+.sq-atm1d .sq-atm1d-selected .sq-atm1d-legend .legend-text, .sq-atm1d .sq-atm1d-hovered .sq-atm1d-legend .legend-text{
+  color: #333;
+}
+.radio .element.OneColumnEl, .checkbox .element.OneColumnEl, .number .element.OneColumnEl, .text .element.OneColumnEl {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.checkbox .cell-text, .radio .cell-text {
+    padding: 8px 0 8px .25em;
+    width: 100%;
+}
+.non-touch .cell-text label, .non-touch .cell-input .checkbox, .non-touch .cell-input .radio {
+   width: 100%;
+    display: inline-block;
+}
+
+/* OE inputs */
+
+input[type=text],
+textarea,
+input[type=tel],
+input[type=number] {
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #000028;
+    font-size: 17px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px
+}
+
+input[type=text]:focus,
+textarea:focus,
+input[type=tel]:focus,
+input[type=number]:focus {
+    background: #fff;
+    border: 1px solid #00abff;
+}
+
+input[type=text],
+input[type=tel],
+input[type=number] {
+    padding: .25em .5em;
+}
+
+.noRows.noCols input[type=text],
+.noRows.noCols input[type=tel],
+.noRows.noCols input[type=number] {
+    padding: .5em .75em
+}
+
+.number input[type='text'] {
+    width: 60px;
+    height: 35px;
+    font-size: 21px;
+    text-align: center;
+}
+
+textarea {
+  /*background-color: #F5F6FA;
+  border: none;*/
+}
+\@media only screen and (min-width: 768px){
+ textarea {
+  max-width:71%;  
+ }
+}
+textarea::-webkit-input-placeholder {
+  color: #78919B;
+  opacity: 0.7
+}
+textarea::-moz-placeholder {
+  color: #78919B;
+  opacity: 0.7
+}
+textarea:-ms-input-placeholder {
+  color: #78919B;
+  opacity: 0.7
+}
+textarea::-ms-input-placeholder {
+  color: #78919B;
+  opacity: 0.7
+}
+textarea::placeholder {
+  color: #78919B;
+  opacity: 0.7
+}
+
+input.oe-inline {
+  width:45%;
+}
+/* answers */
+
+.radio .element.OneColumnEl, .checkbox .element.OneColumnEl, .number .element.OneColumnEl, .text .element.OneColumnEl {
+  width: 69%;
+  max-width: 69%;
+  background: #F5F6FA;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  padding: 2px 8px 2px 15px;
+  padding-left: 15px;
+}
+\@media only screen and (max-width: 480px){
+.radio .element.OneColumnEl, .checkbox .element.OneColumnEl, .number .element.OneColumnEl, .text .element.OneColumnEl{   
+  width: 100%;
+  max-width: 100%;
+ }
+ .radio .element.OneColumnEl, .checkbox .element.OneColumnEl{ padding-left: 8px;}
+.question-text{font-size: 1.2rem;}.cell-text label{font-size: 1rem !important; font-weight:normal;}
+}
+.number .element.OneColumnEl, .text .element.OneColumnEl{
+ padding-top:5px;
+ padding-bottom:5px;
+ background-color:#fff;
+ padding: 0 !important;
+}
+.number .element.OneColumnEl input[type='text'], .text .element.OneColumnEl input[type='text']{
+ height:30px;
+}
+.fir-icon svg, .fir-icon i {
+  font-size: 1.4em;
+}
+.fir-icon svg {
+    margin-top: 3px;
+}
+
+li.sq-atm1d-button.clickable {
+  position: relative;
+}
+.sq-atm1d-hovered::before, .sq-atm1d-selected::before {
+    content: ' ';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-image: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/Symbol+14.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+.sq-atm1d img{
+ max-width:150px;
+}
+
+/* starrating */
+
+.sq-starrating-stars .sq-starrating-star {
+  color: #EBECF0 !important;
+}
+
+.sq-starrating-stars .sq-starrating-star.sq-starrating-star-highlighted,
+.sq-starrating-stars .sq-starrating-star.sq-starrating-star-selected {
+  color: #00abff !important; 
+}
+
+
+
+/* maxdiff */
+
+/* TODO
+ - add class "selected" to the cells (non-default decipher) 
+ - change the fill: of the least cells
+*/
+td.element.selected[headers$="most"] {
+  background: #e2f2ff !important;
+}
+td.element.selected[headers$="least"] {
+  background: #ffe3d9 !important;
+}
+
+
+td.element[headers$="least"] .fir-icon.selected .rounded .fir-base,
+td.element[headers$="least"] .fir-icon.selected .square .fir-base,
+td.element[headers$="least"] .fir-icon.selected .rounded .fir-selected,
+td.element[headers$="least"] .fir-icon.selected .square .fir-selected,
+td.element[headers$="least"].clickableCell:hover .fir-icon .rounded .fir-selected,
+td.element[headers$="least"].clickableCell:hover .fir-icon .square .fir-selected {
+    fill: #ff7240 !important;
+}
+
+.grid-table-mode .nonempty {
+    border-left: 1px transparent;
+    border-right: 1px transparent;
+}
+.grid-table-mode th.col-legend-top {
+    border-top: 1px transparent;
+    color: #78919b;
+}
+
+
+.grid-table-mode .element:hover, .grid-table-mode .element:focus, .grid-table-mode .element:active {
+    /*background-color: transparent;*/
+    background-color: #f5f6fa;
+}
+.grid-table-mode .legend{
+padding:20px .5em;
+}
+/* dropdown */
+.input.dropdown {
+  background: #F5F6FA!important;
+  border: none!important;
+}
+
+
+/* atmrating */
+.atmrating_legend {
+  color: #78919B;
+}
+
+/* slidernumber */
+.slidernumber_legend {
+  color: #78919B;
+}
+
+
+/* sliderpoints */
+.sliderpoints-legenditem {
+ color: #78919B; 
+}
+
+
+/* more Page adjustments */
+
+#primary .survey-error {
+    display: none;
+}
+
+
+.question-error {
+    background-color: #FF7240;
+    color: #fff;
+    min-height: 30px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    font-size: 1.25em;
+    margin: .5em 0;
+    padding:20px 20px;
+    background-image: url('//ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/warning.svg');
+    background-repeat:no-repeat;
+    background-position: 20px center;
+    padding-left:60px;
+   }
+\@media (min-width: 768px){
+.question-error {   
+  width: 62%;
+ }
+}
+\@media (max-width: 767px){
+.question-error {   
+  width: 100%;
+ }
+}
+
+.cell.hasError, .answers-list .element.hasError, .element.hasError:hover, .rowLegendErr .oe, .colLegendErr .oe {
+    background-color: #FFE3D9;
+}
+.radio .element.OneColumnEl:hover, .checkbox .element.OneColumnEl:hover,
+.radio .element.OneColumnEl.checked, .checkbox .element.OneColumnEl.checked {
+    background: #E2F2FF;
+}
+.radio .element.OneColumnEl:hover, .checkbox .element.OneColumnEl:hover,
+.radio .element.OneColumnEl.checked, .checkbox .element.OneColumnEl.checked {
+    background: #E2F2FF;
+}
+
+
+.survey-buttons {
+    position: absolute;
+    right: 60px;
+    /*bottom: 60px;*/
+    bottom: 50px;
+    width: 23%;
+    padding-right: 0;
+}
+#btn_continue, #btn_goback, #btn_finish {
+  margin: .3em 0.5em 0.5em 0.3em;
+  text-transform:uppercase;
+}
+#btn_randomize {
+  margin: 0 20%;
+}
+
+\@media only screen and (max-width: 768px){
+  .survey-buttons {
+      position: absolute;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      padding-right: 0;
+  }
+  #btn_continue, #btn_goback, #btn_finish {
+    display: inline-block;
+  }
+  #btn_randomize {
+    display: block;
+    margin: 0;
+  }
+
+  .progress-box-outer {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .progress-box-outer {
+    border-radius: 0 !important;
+  }
+  .progress-box-completed {
+    border-radius: 0 !important;
+  }
+}
+
+
+
+
+
+textarea.input {
+  resize:none;
+}
+.text .element:last-of-type {
+  padding-top: 0.5em;
+}
+/******logo**********/
+.logo-left{
+text-align:left;
+display:none;
+}
+.logo-image{
+ width:200px;
+ height:auto;
+}
+.survey-warning{
+display:none;
+}
+
+.grid.grid-table-mode.setWidth {
+width: 69%;
+}
+/*
+input[type=text], textarea {
+  font-size: 1rem;
+  background-color:#F5F6FA;
+  border-color:#F5F6FA;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;  
+}
+
+.sq-atm1d-open .sq-atm1d-openEnd input[type=text]{
+ background-color:#AFBEC5;
+}
+*/
+/*****************end css added for Factworks*****/
+
+/**************** ADDED CSS FOR NEXT BUTTON *****************/
+.continue {
+    font-weight: normal;
+}
+#question_Q9 .fir-icon.selected .square .fir-bg{fill: #00abff;}
+#question_Q9 .fir-icon .square .fir-selected{fill:#fff;}
+ </style>
+]]></style>
+<suspend/>
+
+<exec when="init">
+def isTest():
+  return str(gv.survey.root.state) == 'testing'
+
+#DK settings, set basic and high security keys
+#these keys should be changed for every project, please ask your PMs to provide you valid keys for your project
+def getDkSecStr():
+
+  try:
+    key1 = 34568 #basicKey
+    key2 = 31767 #highKey
+    
+    if  key1 and key2:
+      return "&amp;high=" + str(key1 * int(pid) - key2)
+      
+    elif key1:
+      return "&amp;basic=" + str(key1)
+      
+    else: return ""
+    
+  except:
+    return ""
+
+mxDomain = "d2n88fe5uqdqty.cloudfront.net"
+#for surveys in China please use the domain below
+#mxDomain = "survey-dcd-rml.rsncdn.com" or check what the current base path here https://confluence.dynata.com/x/UdM5Ag
+order_id = 'ORD-12345-ABCD'
+project_id = gv.survey.path
+
+def initMxDataToggle():
+  output = "\n"
+  output += "var dataToggler = jQuery('&lt;div&gt;Please click here to see the data nodes for this tool.&lt;/div&gt;');\n"
+  output += "dataToggler.addClass('dataToggle');\n"
+  output += "dataToggler.css({'text-decoration': 'underline','font-size': 'small','color': 'blue','cursor': 'pointer','margin-top': '20px'});\n"
+  output += "jQuery('.mx-stage').last().after(dataToggler);\n"
+  output += "dataToggler.click(info.bridge.toggleDataNodes());\n"
+  return output
+
+def MxToolUsageUrl(toolid):
+  return 'https://surveytools.dynata.com/rsntools/rnd/apis/latest/monitoring/latest/tool/add-usage?project-id=' + gv.survey.path + '&amp;tool-id=' + toolid + '&amp;server-id=' + getHostId(gv)
+</exec>
+
+<suspend/>
+
+<exec>
+#Default RN Theme
+QTheme.val=QTheme.r3.index
+
+#FW set up for Nexus, MFour, open survey (testing)
+if list == "2" or list == "0" or list == "8":
+  QTheme.val=QTheme.r6.index
+
+#For factworks setup
+if list == "6":
+  QTheme.val=QTheme.r6.index
+#For factworks - chime setup
+if list == "7":
+  QTheme.val=QTheme.r7.index
+  QBackground.val = QBackground.r16.index
+  
+#override DK theme if its a Basis project
+#For Basis
+#QTheme.val=QTheme.r4.index
+
+
+#QTheme.val=QTheme.r6.index #==================================== Set the Theme for all sources  to FW by default
+
+#QBackground.val = QBackground.r15.index
+</exec>
+
+<exec>
+p.questionsAnswered = 0
+</exec>
+
+<radio 
+  label="QTheme"
+  translateable="0"
+  where="none">
+  <title><span style="color: black;">Please select the survey template.</span></title>
+  <row label="r1">Nursery Clean</row>
+  <row label="r2">Nursery Happy</row>
+  <row label="r3">Default Template</row>
+  <row label="r4">Basis Pink</row>
+  <row label="r5">DK Theme</row>
+  <row label="r6">Factworks</row>
+  <row label="r7">Factworks - Chime</row>
+</radio>
+
+<radio 
+  label="QBackground"
+  translateable="0"
+  where="none">
+  <title>Please select the background image for the survey template</title>
+  <row label="r1">baseball.jpg</row>
+  <row label="r2">cartoon_city.png</row>
+  <row label="r3">cartoon_hill.png</row>
+  <row label="r4">cartoon_layer.png</row>
+  <row label="r5">cartoon_mountains.png</row>
+  <row label="r6">cartoon_sunset.png</row>
+  <row label="r7">desertrock.jpg</row>
+  <row label="r8">forestrock.jpg</row>
+  <row label="r9">green.jpg</row>
+  <row label="r10">peach.jpg</row>
+  <row label="r11">pink.jpg</row>
+  <row label="r12">pinkgreen.jpg</row>
+  <row label="r13">roadmountain.jpg</row>
+  <row label="r14">tranquil.jpg</row>
+  <row label="r15">plain.jpg</row>
+  <row label="r16">#EDFAF4</row>
+</radio>
+
+<suspend/>
+
+<style cond="(QTheme.r3 or QTheme.r4)" name="survey.respview.footer"><![CDATA[
+<p style="margin: 0.5% 0% 0% 0%; !Important "><a href="${PolicyLink.selected.text if PolicyLink.any else ""}" target="_blank" title="Privacy Policy" jstcache="0">${PolicyText.selected.text if PolicyText.any else ""}
+</a>  <a ${"target='_blank'" if SupportEmail.selected != None and '@' not in SupportEmail.selected.text else ""} href="${"mailto:" if SupportEmail.selected != None and '@' in  SupportEmail.selected.text else ""}${SupportEmail.selected.text if SupportEmail.any else ""}${"?subject=Project: "+gv.request.path + " - Record: "+ record if SupportEmail.selected != None and '@' in SupportEmail.selected.text else ""}" title="Support Email" jstcache="0">${SupportText.selected.text if SupportText.any else ""}</a></p>
+]]></style>
+<style cond="not(QTheme.r3)" name="question.after"><![CDATA[
+<style>
+
+body
+{
+  background-image: url("//surveyfiles.dynata.com/emea/2021/nursery_template/${QBackground.selected.text if QBackground.selected else '' }");
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+  
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: #464646;
+}
+
+.survey-body
+{
+opacity:0.97;
+}
+
+.logo-image, .logo
+{
+//for nursery template, survey is using transparent logo
+//visibility:hidden;
+//max-width:0em;
+
+margin-bottom:0;
+}
+
+</style>
+]]></style>
+<style cond="QTheme.r4" name="question.after"><![CDATA[
+<style>
+
+.instruction-text{
+    font-style: italic;
+}
+
+</style>
+]]></style>
+<style cond="QTheme.r4" name="question.after"><![CDATA[
+<style>
+
+.instruction-text{
+    font-style: italic;
+}
+
+</style>
+]]></style>
+<style cond="QTheme.r6" name="page.head"><![CDATA[
+<style>
+
+</style>
+]]></style>
+<style cond="QTheme.r7" name="page.head"><![CDATA[
+<link rel="stylesheet" type="text/css" href="https://d2n88fe5uqdqty.cloudfront.net/rnd/plugins/ionicons/ionicons-2.0.1/css/ionicons.min.css">
+<style>
+.survey-page {
+  background: ${QBackground.selected.text} !important;
+}
+.survey-body {
+  padding-top: 0 !important;
+  border-radius: 20px 20px 20px 20px;
+}
+.survey-header {
+  min-height: 75px;
+  margin-top: 0;
+  margin-bottom: 75px !important;
+  background: #3FC87A !important;
+}
+.survey-header:before, .survey-header:after {
+  content: '';
+  position: absolute;
+  background: #3FC87A;
+  height: 75px;
+  width: 65px;
+  top: 0;
+}
+.survey-header:before {
+  left: 0;
+  border-radius: 20px 0 0 0;
+}
+.survey-header:after {
+  right: 0;
+  border-radius: 0 20px 0 0;
+}
+.logo.logo-left {
+  background: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/Chime_logo.png) top left no-repeat;
+  display: block;
+  height: 70px;
+  background-size: 185px
+}
+.logo img.logo-image {
+  display: none !important;
+}
+/*
+.survey-body > form, .question-text, .instruction-text {
+  color: #3D3D5A !important;
+}
+*/
+.progress-box-outer {
+  background-color: #C5F8DE !important;
+}
+.progress-box-completed {
+  background-color: #33AB64 !important;
+}
+
+/* Buttons */
+
+#btn_continue {
+  background: #33AB64 !important;
+  color: #fff !important;
+}
+#btn_continue:hover {
+  background: #3FC87A !important;
+}
+#btn_goback, #btn_randomize {
+  background: #3FC87A !important;
+  color: #fff !important;
+}
+#btn_randomize {
+  margin: 0 auto !important;
+}
+#btn_continue, #btn_goback, #btn_finish, #btn_randomize {
+  border-radius: 5px;
+  margin: 0.1em 0.1em 0.1em 0.1em;
+}
+.button.back:hover, .button.randomize:hover, .button.back:focus, .button.randomize:focus {
+  border-color: #3FC87A !important;
+}
+.non-touch .fir-icon.focus, .non-touch .fir-select.focus, .non-touch .fir-select .select2-container--focus, .non-touch .survey-buttons .button:focus, .non-touch .footer a:focus {
+  box-shadow: 0 0 3px 2px #3FC87A !important;
+}
+
+.grid.grid-list-mode tr.answered th.cell, .grid.grid-list-mode tr.answered th.cell .maccord-legend {
+ background: #C5F8DE !important;
+}
+.grid.grid-list-mode tr.answered.expanded th.cell, .grid.grid-list-mode tr.answered.expanded th.cell .maccord-legend, .grid.grid-list-mode tr.answered.expanded .cell, .grid.grid-list-mode tr.answered.expanded .maccord-legend {
+ background: #F5F6FA !important;
+}
+.grid.grid-list-mode tr.answered td.checked.cell {
+    background: #C5F8DE !important;
+}
+.fir-icon.selected .rounded .fir-base, .fir-icon.selected .square .fir-base
+{
+  fill: #33AB64 !important;
+}
+.fir-icon.selected .rounded .fir-bg, .fir-icon.selected .square .fir-bg {
+  fill: #C5F8DE !important;
+}
+.fir-icon.selected .rounded .fir-selected, .fir-icon.selected .square .fir-selected {
+  fill: #33AB64 !important;
+}
+.non-touch .fir-icon:hover .rounded .fir-selected, 
+.non-touch .fir-icon:hover .square .fir-selected, 
+.non-touch .grid-table-mode .clickableCell:hover .fir-icon .rounded .fir-selected, 
+.non-touch .grid-table-mode .clickableCell:hover .fir-icon .square .fir-selected {
+  fill: #33AB64 !important;
+}
+.question.checkbox .fir-icon.selected .rounded .fir-bg, .question.checkbox .fir-icon.selected .square .fir-bg,
+.cell-no-answer .fir-icon.selected .rounded .fir-bg, .cell-no-answer .fir-icon.selected .square .fir-bg {
+  fill: #33AB64 !important;
+}
+.question.checkbox .fir-icon.selected .rounded .fir-selected, .question.checkbox .fir-icon.selected .square .fir-selected,
+.cell-no-answer .fir-icon.selected .rounded .fir-selected, .cell-no-answer .fir-icon.selected .square .fir-selected {
+  fill: #ffffff !important;
+}
+.non-touch .grid-table-mode .clickableCell.cell-no-answer:hover .fir-icon .rounded .fir-selected, 
+.non-touch .grid-table-mode .clickableCell.cell-no-answer:hover .fir-icon .square .fir-selected {
+  fill: #ffffff !important;
+}
+.no-answer+span.fir-icon.selected:before {
+  border-color: #33AB64 !important;
+}
+.no-answer+span.fir-icon.selected:after {
+  background: #33AB64 !important;
+}
+.sq-atm1d .sq-atm1d-selected, .sq-atm1d .sq-atm1d-hovered {
+  background-color: #C5F8DE !important;
+  color: #3D3D5A !important;
+}
+.sq-atm1d-hovered::before, .sq-atm1d-selected::before {
+  background-image: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/Symbol_14.png) !important;
+}
+.radio .element.OneColumnEl:hover, .checkbox .element.OneColumnEl:hover, .radio .element.OneColumnEl.checked, .checkbox .element.OneColumnEl.checked {
+  background: #C5F8DE !important;
+}
+.number .answers .element:hover, .text .answers .element:hover, .number .answers .element.checked, .text .answers .element.checked {
+  background: #C5F8DE !important;
+}
+input[type=text]:focus, textarea:focus, input[type=tel]:focus, input[type=number]:focus {
+  border: 1px solid #33AB64 !important;
+}
+/* ERROR CSS */
+.question-error {
+  background: #FBC552 !important;
+}
+.answers tr.row-elements.hasError .row-legend, .answers tr.row-elements.hasError .maccord-legend {
+  background-color: #FBC552 !important;
+}
+.question-error {
+  position: relative;
+}
+
+.question-error:before {
+  content: "";
+  background: url(https://ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/alert.png) top center no-repeat;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background-size: 100%;
+  left: 2%;
+  top: 25%;
+}
+
+.question-error-text {
+  position: relative;
+  font-size: 1.25rem;
+}
+
+/*.fir-icon .rounded .fir-bg,.fir-icon .square .fir-bg{fill:#00abff;}*/
+
+\@media only screen and (max-width: 767px) {
+  .survey-header:before, .survey-header:after {
+    width: 2% !important;
+  }
+  .survey-buttons {position:relative !important;}   
+}
+\@media only screen and (max-width: 480px) {
+  .survey-header {
+    min-height: 75px;
+    border-radius: 10px;
+    position: relative;
+  }
+  .survey-header:before, .survey-header:after {
+    display: none;
+  }
+  .progress-bar {
+    margin-top: 3%;
+    position: absolute;
+  }
+  .question-text, .instruction-text, .answers {
+    text-align: left !important;
+  }
+}
+</style>
+]]></style>
+<suspend/>
+
+<exec>
+try:
+  Source.val = Source.attr('r%s' % src).index    
+except Exception:
+  Source.val = Source.r99.index
+  
+try:
+  Country.val = Country.attr('r%s' % C).index
+  dNext.val = dNext.attr('r%s' % C).index
+  # SET DEFAULT TO U.S.
+  Country.val = Country.r2.index
+except Exception:
+  pass
+  
+  
+try:
+  dWave.val = dWave.attr('r%s' % W).index
+except Exception:
+  dWave.val = dWave.r999.index
+  
+
+try:
+  if ot:
+    Subsid.val = ot
+  else:
+    Subsid.val = psid
+  
+except Exception:
+  pass
+
+
+#DK variables
+try:
+  xsubPanel.val = xsubPanel.attr('r%s' % sp).index
+except Exception:
+  pass
+
+try:
+  xpanelPartner.val = xpanelPartner.attr('r%s' % pp).index
+except Exception:
+  pass
+</exec>
+
+<exec when="init">
+def getCurYear():
+  import datetime
+  now = datetime.datetime.now()
+  return now.year
+
+def rntrackcurqid():
+  try: rncurqid(this.label,p,removeMarker,setMarker)
+  except: pass
+  return ''
+</exec>
+
+<exec>
+#rnsetTheme(gv,src,decLang)
+rnentryurl.val = getFullPath(gv)
+
+p.tmp = ''
+
+p.qs = dict()
+p.qs['on'] = 1; #Quality score On/Off, 1 = On, 0 = off
+p.qs['term'] = 0; #Quality score Termination On/Off, 1 = On, 0 = off
+ 
+#Please set Quality Score country code accordingly.
+#Please refer to https://confluence.dynata.com/x/WZVKB for the full list of codes.
+p.qs['countryCode'] = 'US';
+#if country code passed by a parameter, e.g. country=CA
+#p.qs['countryCode'] = country
+p.qs['QsLangCode'] = '' #For generic language codes only
+p.qs['surveyID'] = gv.survey.path if gv.survey.root.state.live else gv.survey.path + '_test'
+</exec>
+
+<suspend/>
+
+<samplesources default="2">
+  <samplesource keyring="sys/rn" list="1" sign="out">
+    <title>Research Now (STS UR)</title>
+    <invalid>The unique number that tracks your progress through this survey is missing. To resume, please click the original link in the email we sent you.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <var name="ot" unique="1"/>
+    <var name="study" required="1"/>
+    <var name="src"/>
+    <var name="STS"/>
+    <var name="W"/>
+    <var name="ur"/>
+    <var name="C"/>
+    <var name="st"/>
+    <var name="isTest"/>
+    <exit cond="terminated and (hasMarker('speederAutoCheck') or hasMarker('speederAuto') or hasMarker('slowpokeAuto') or hasMarker('straightlinerAuto') or hasMarker('badopenAuto') or hasMarker('failedAuto'))" url="http://surveymyopinion.researchnow.com/endlink?disp=4&amp;ot=${ot}&amp;wave=${study}"/>
+    <exit cond="terminated and isTest=='1'" timeout="5" url="http://surveymyopinion.researchnow.com/endlink?disp=2&amp;ot=${ot}&amp;wave=${study}">Screened out</exit>
+    <exit cond="overquota and isTest=='1'" timeout="5" url="http://surveymyopinion.researchnow.com/endlink?disp=3&amp;ot=${ot}&amp;wave=${study}">Quota full</exit>
+    <exit cond="qualified and isTest=='1'" timeout="5" url="http://surveymyopinion.researchnow.com/endlink?disp=1&amp;ot=${ot}&amp;wave=${study}">Complete</exit>
+    <exit cond="terminated" url="http://surveymyopinion.researchnow.com/endlink?disp=2&amp;ot=${ot}&amp;wave=${study}"/>
+    <exit cond="overquota" url="http://surveymyopinion.researchnow.com/endlink?disp=3&amp;ot=${ot}&amp;wave=${study}"/>
+    <exit cond="qualified" url="//dkr1.ssisurveys.com/projects/end?rst=1&amp;psid=${psid if gv.survey.root.state.live else psid+'_test'}${getDkSecStr()}${'&amp;compflag=2' if hasMarker('shortComplete') else '&amp;compflag=3' if hasMarker('longComplete') else ''}${'&amp;imperiumQS='+hQualityScoreAnalyze.r1.val + '&amp;imperiumQSI=' + hQualityScoreAnalyze.r14.val if hQualityScoreAnalyze.r14 else ''}"/>
+  </samplesource>
+
+  <samplesource list="7">
+    <title>New list</title>
+    <invalid>You are missing information in the URL. Please verify the URL with the original invite.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <var name="ID" unique="1"/>
+    <exit cond="terminated">Thank you for taking our survey.</exit>
+    <exit cond="qualified">Thank you for taking our survey. Your efforts are greatly appreciated!</exit>
+    <exit cond="overquota">Thank you for taking our survey.</exit>
+  </samplesource>
+
+  <samplesource list="8">
+    <title>CINT</title>
+    <invalid>You are missing information in the URL. Please verify the URL with the original invite.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <var name="ID" unique="1"/>
+    <exit cond="terminated" url="https://www.surveysonthego.net/survey/terminate?ID=${ID}">Screened out</exit>
+    <exit cond="qualified" url="https://www.surveysonthego.net/survey/complete?ID=${ID}">Complete</exit>
+    <exit cond="overquota" url="https://www.surveysonthego.net/survey/overquota?ID=${ID}">Quota full</exit>
+    <exit cond="terminated and hasMarker('qualityfail')" url="https://www.surveysonthego.net/survey/qualityscreen?ID=${ID}">Quality Screenout</exit>
+  </samplesource>
+
+  <samplesource keyring="sys/rn" list="2" sign="out">
+    <title>Nexus/DK</title>
+    <invalid>The unique number that tracks your progress through this survey is missing. To resume, please click the original link in the email we sent you.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <var name="pid" pii="4" required="1"/>
+    <var name="psid" unique="1"/>
+    <var name="C"/>
+    <var name="W"/>
+    <var name="sp"/>
+    <var name="pp"/>
+    <var name="sc"/>
+    <var name="ppid"/>
+    <exit cond="terminated and (hasMarker('speederAutoCheck') or hasMarker('speederAuto'))" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}&amp;qflag=1"/>
+    <exit cond="terminated and hasMarker('straightlinerAuto')" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}&amp;qflag=25"/>
+    <exit cond="0 and terminated" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}${'&amp;qflag=5' if hasMarker('lateScreenOut')  else ''}"/>
+    <exit cond="terminated" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}${'&amp;qflag=5' if hasMarker('lateScreenOut')  else ''}&amp;qflag=8"/>
+    <exit cond="overquota" url="//dkr1.ssisurveys.com/projects/end?rst=3&amp;psid=${psid}${'&amp;qflag=6' if hasMarker('lateQuotaFull')  else ''}"/>
+    <exit cond="terminated and (hasMarker('speederAutoCheck') or hasMarker('speederAuto'))" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}&amp;qflag=1&amp;imperiumQS=${hQualityScoreAnalyze.r1.val}&amp;imperiumQSI=${hQualityScoreAnalyze.r14.val if hQualityScoreAnalyze.r14 else ''}&amp;imperiumQSM=${hQualityScoreAnalyze.r20.val if hQualityScoreAnalyze.r20 else ''}"/>
+    <exit cond="terminated and hasMarker('straightlinerAuto')" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}&amp;qflag=25&amp;imperiumQS=${hQualityScoreAnalyze.r1.val}&amp;imperiumQSI=${hQualityScoreAnalyze.r14.val if hQualityScoreAnalyze.r14 else ''}&amp;imperiumQSM=${hQualityScoreAnalyze.r20.val if hQualityScoreAnalyze.r20 else ''}"/>
+    <exit cond="terminated and hasMarker('qualityScore')" url="//dkr1.ssisurveys.com/projects/end?rst=2&amp;psid=${psid}&amp;qflag=95&amp;imperiumQS=${hQualityScoreAnalyze.r1.val}&amp;imperiumQSI=${hQualityScoreAnalyze.r14.val if hQualityScoreAnalyze.r14 else ''}&amp;imperiumQSM=${hQualityScoreAnalyze.r20.val if hQualityScoreAnalyze.r20 else ''}"/>
+    <exit cond="qualified" url="//dkr1.ssisurveys.com/projects/end?rst=1&amp;psid=${psid if gv.survey.root.state.live else psid+'_test'}${getDkSecStr()}${'&amp;compflag=2' if hasMarker('shortComplete') else '&amp;compflag=3' if hasMarker('longComplete') else ''}&amp;imperiumQS=${hQualityScoreAnalyze.r1.val}&amp;imperiumQSI=${hQualityScoreAnalyze.r14.val if hQualityScoreAnalyze.r14 else ''}&amp;imperiumQSM=${hQualityScoreAnalyze.r20.val if hQualityScoreAnalyze.r20 else ''}"/>
+  </samplesource>
+
+  <samplesource list="0">
+    <title>Open Survey</title>
+    <invalid>You are missing information in the URL. Please verify the URL with the original invite.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <var name="psid" required="1"/>
+    <exit cond="terminated">Thank you for taking our survey.</exit>
+    <exit cond="overquota">Thank you for taking our survey.</exit>
+    <exit cond="qualified">Thank you for taking our survey. Your efforts are greatly appreciated!</exit>
+  </samplesource>
+</samplesources>
+
+<themes>
+  <theme cond="QTheme.r3 and src in ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','42','45','46','47','48','49','64','65','66','101']" name="frozen:company/vop-as-v2"/>
+  <theme cond="src in ['50','51','52','53','54','55','56','57','58','59','60','560','561','562','563','564','565','566']" name="frozen:company/eri-as-v2"/>
+  <theme cond="QTheme.r4" name="frozen:company/basis_setup3"/>
+  <theme cond="QTheme.r1" name="frozen:company/nursery-clean"/>
+  <theme cond="QTheme.r2" name="frozen:company/nursery-happy"/>
+  <theme cond="0 and ((list == '2' and not(QTheme.r4)) or (list=='0'and not(QTheme.r4)))" name="frozen:company/theme_dk"/></themes>
+<exec>
+#Change logo from source
+#.less files are saved in selfserve/53c/static
+
+srcRecode = 0
+try:
+  srcRecode = int(src)
+except:
+  False
+
+try:
+  if ( ( (int(srcRecode) ge 1 and int(srcRecode) le 40) or (int(srcRecode) ge 45 and int(srcRecode) le 49) or (int(srcRecode) ge 64 and int(srcRecode) le 66) ) and QTheme.r3):
+    if int(srcRecode) == 3:
+      gv.survey.root.styles.ss.logoFile = 'selfserve/53c/vop_logo_IT.png'
+    else:
+      gv.survey.root.styles.ss.logoFile = 'selfserve/53b/vop_logo_v2.png'
+    gv.survey.root.styles.ss.logoPosition = "middle"
+  elif ( (int(srcRecode) ge 50 and int(srcRecode) le 60) and QTheme.r3):
+    gv.survey.root.styles.ss.logoFile = 'selfserve/53c/er_logo_wide.png'
+    gv.survey.root.styles.ss.logoPosition = "middle"
+  elif ( (int(srcRecode) == 101) and QTheme.r3):
+    gv.survey.root.styles.ss.logoFile = 'selfserve/53c/nectarcanvass.png'
+    gv.survey.root.styles.ss.logoPosition = "middle"
+  elif QTheme.r1:
+    gv.survey.root.styles.ss.logoFile = 'selfserve/53c/blank_logo1.png'
+  elif QTheme.r2:
+    gv.survey.root.styles.ss.logoFile = 'selfserve/53c/blank_logo1.png'
+  elif QTheme.r4:
+    gv.survey.root.styles.ss.logoFile = 'selfserve/53c/basis_logo.png'
+    gv.survey.root.styles.ss.logoPosition = "right"
+  elif (int(srcRecode) ge 560 and int(srcRecode) le 566):
+    gv.survey.root.styles.ss.logoFile = 'selfserve/53b/er_logo_mmr.png'
+    gv.survey.root.styles.ss.logoPosition = "middle"
+except:
+  False
+</exec>
+
+<suspend/>
+
+<pipe label="pFir" capture="" translateable="0">
+  <case label="r1" cond="src=='6'">#5AB414</case>
+  <case label="r2" cond="1">#336667</case></pipe>
+<block label="Block1Vars" builder:title="Template Variables">
+  <radio 
+   label="Source"
+   multicol:count="5"
+   multicol:flow="horizontal"
+   optional="1"
+   randomize="0"
+   translateable="0"
+   uses="multicol.7"
+   where="none">
+    <title>Identifies which panel the respondent belongs to</title>
+    <row label="r1" value="1">VOP UK (United Kingdom)</row>
+    <row label="r2" value="2">VOP FR (France)</row>
+    <row label="r3" value="3">VOP IT (Italy)</row>
+    <row label="r4" value="4">VOP DE (Germany)</row>
+    <row label="r5" value="5">VOP ES (Spain)</row>
+    <row label="r6" value="6">VOP AU (Australia)</row>
+    <row label="r7" value="7">VOP AT (Austria)</row>
+    <row label="r8" value="8">VOP NO (Norway)</row>
+    <row label="r9" value="9">VOP PL (Poland)</row>
+    <row label="r10" value="10">VOP RU (Russia)</row>
+    <row label="r11" value="11">VOP IE (Ireland)</row>
+    <row label="r12" value="12">VOP CH (Switzerland) - German</row>
+    <row label="r13" value="13">VOP DK (Denmark)</row>
+    <row label="r14" value="14">VOP FI (Finland)</row>
+    <row label="r15" value="15">VOP SE (Sweden)</row>
+    <row label="r16" value="16">VOP NL (Netherlands)</row>
+    <row label="r17" value="17">VOP GR (Greece)</row>
+    <row label="r18" value="18">VOP BE (Belgium) - Dutch</row>
+    <row label="r19" value="19">VOP CZ (Czech Rep)</row>
+    <row label="r20" value="20">VOP PT (Portugal)</row>
+    <row label="r21" value="21">VOP HU (Hungary)</row>
+    <row label="r22" value="22">VOP USA (United States) - English</row>
+    <row label="r23" value="23">VOP BR (Brazil)</row>
+    <row label="r24" value="24">VOP USA (United States) - Spanish</row>
+    <row label="r25" value="25">VOP BE (Belgium) - French</row>
+    <row label="r26" value="26">VOP CH (Switzerland) - French</row>
+    <row label="r27" value="27">VOP CH (Switzerland) - Italian</row>
+    <row label="r28" value="28">VOP CH (Switzerland) - English</row>
+    <row label="r29" value="29">VOP NZ (New Zealand) - English</row>
+    <row label="r30" value="30">VOP ME (Mexico)</row>
+    <row label="r31" value="31">VOP IN (India)</row>
+    <row label="r32" value="32">VOP CN (China)</row>
+    <row label="r33" value="33">VOP SING (Simplified Chinese)</row>
+    <row label="r34" value="34">VOP CHIL</row>
+    <row label="r35" value="35">VOP SING (English)</row>
+    <row label="r36" value="36">VOP ARG</row>
+    <row label="r37" value="37">VOP CAN (Canada) - English</row>
+    <row label="r38" value="38">VOP CAN (Canada) - French</row>
+    <row label="r39" value="39">VOP JAP (Japan)</row>
+    <row label="r40" value="40">VOP SKOR (South Korea)</row>
+    <row label="r41" value="41">Mum's Opinions</row>
+    <row label="r42" value="42">VOP South Africa</row>
+    <row label="r43" value="43">B2B UK</row>
+    <row label="r44" value="44">Research Now</row>
+    <row label="r45" value="45">VOP HK (Chinese)</row>
+    <row label="r46" value="46">VOP HK (English)</row>
+    <row label="r47" value="47">VOP Taiwan</row>
+    <row label="r48" value="48">VOP Malaysia (Malay)</row>
+    <row label="r49" value="49">VOP Malaysia (English)</row>
+    <row label="r50" value="50">E-Rewards (English)</row>
+    <row label="r51" value="51">E-Rewards (Germany)</row>
+    <row label="r52" value="52">E-Rewards (Spain)</row>
+    <row label="r53" value="53">E-Rewards (France)</row>
+    <row label="r54" value="54">E-Rewards (Netherlands)</row>
+    <row label="r55" value="55">E-Rewards (Portugal)</row>
+    <row label="r56" value="56">E-Rewards MMR</row>
+    <row label="r57" value="57">E-Rewards UTB (English)</row>
+    <row label="r58" value="58">E-Rewards (Canada-French)</row>
+    <row label="r59" value="59">E-Rewards (US-Spanish)</row>
+    <row label="r60" value="60">E-Rewards (Mexico-Spanish)</row>
+    <row label="r61" value="61">Webmiles DE</row>
+    <row label="r62" value="62">Swiss Webmiles DE</row>
+    <row label="r63" value="63">Swiss Webmiles FR</row>
+    <row label="r64" value="64">VOP Indonesia</row>
+    <row label="r65" value="65">VOP Thailand</row>
+    <row label="r66" value="66">VOP Turkey</row>
+    <row label="r67" value="67">E-Miles</row>
+    <row label="r68" value="68">Peanut Labs</row>
+    <row label="r69" value="69">AirMiles</row>
+    <row label="r70" value="70">Lightspeed North America</row>
+    <row label="r71" value="71">Lightspeed Australia</row>
+    <row label="r72" value="72">Lightspeed Europe</row>
+    <row label="r73" value="73">eRewards</row>
+    <row label="r74" value="74">ePocrates</row>
+    <row label="r75" value="75">Leger</row>
+    <row label="r76" value="76">ToLuna</row>
+    <row label="r77" value="77">MedSite</row>
+    <row label="r78" value="78">Ipsos</row>
+    <row label="r79" value="79">Pureprofile</row>
+    <row label="r80" value="80">Ticketekrewards</row>
+    <row label="r81" value="81">veda advantage</row>
+    <row label="r82" value="82">aussie survey</row>
+    <row label="r83" value="83">Ciao</row>
+    <row label="r84" value="84">Greenfield</row>
+    <row label="r85" value="85">Livra</row>
+    <row label="r86" value="86">AIP</row>
+    <row label="r87" value="87">GFK</row>
+    <row label="r88" value="88">CINT</row>
+    <row label="r89" value="89">Livra</row>
+    <row label="r90" value="90">Debrand 1</row>
+    <row label="r91" value="91">Debrand 2</row>
+    <row label="r92" value="92">Debrand 3</row>
+    <row label="r93" value="93">Debrand 4</row>
+    <row label="r94" value="94">Debrand 5</row>
+    <row label="r95" value="95">Debrand 6</row>
+    <row label="r96" value="96">Debrand 7</row>
+    <row label="r97" value="97">Debrand 8</row>
+    <row label="r98" value="98">Debrand 9</row>
+    <row label="r99" value="99">CATCH ALL</row>
+    <row label="r100" value="100">PHolder - Debrand 11</row>
+    <row label="r101" value="101">Nectar Canvas</row>
+    <row label="r560" value="560">MMR (EN_UK)</row>
+    <row label="r561" value="561">MMR (EN_CA)</row>
+    <row label="r562" value="562">MMR (FR_CA)</row>
+    <row label="r563" value="563">MMR (DE_DE)</row>
+    <row label="r564" value="564">MMR (FR_FR)</row>
+    <row label="r565" value="565">MMR (IT_IT)</row>
+    <row label="r566" value="566">MMR (ES_ES)</row>
+    <row label="r731" value="731">ERI/EROP Nectar</row>
+  </radio>
+
+  <exec>
+Country.val = Country.r2.index
+  </exec>
+
+  <radio 
+   label="Country"
+   multicol:count="5"
+   randomize="0"
+   translateable="0"
+   uses="multicol.7"
+   where="report">
+    <title>Country from URL</title>
+    <row label="r1">UK||GB</row>
+    <row label="r2">USA||US</row>
+    <row label="r3">France||FR</row>
+    <row label="r4">Italy||IT</row>
+    <row label="r5">Germany||DE</row>
+    <row label="r6">Spain||ES</row>
+    <row label="r7">Sweden||SE</row>
+    <row label="r8">Denmark||DK</row>
+    <row label="r9">Norway||NO</row>
+    <row label="r10">Greece||GR</row>
+    <row label="r11">Hungary||HU</row>
+    <row label="r12">Czech Republic||CZ</row>
+    <row label="r13">Poland||PL</row>
+    <row label="r14">Russia||RU</row>
+    <row label="r15">South Korea||KR</row>
+    <row label="r16">Thailand||TH</row>
+    <row label="r17">UK (Welsh)||</row>
+    <row label="r18">Ireland||IE</row>
+    <row label="r19">Australia||AU</row>
+    <row label="r20">China||CN</row>
+    <row label="r21">Japan||JP</row>
+    <row label="r22">Austria||AT</row>
+    <row label="r23">India||IN</row>
+    <row label="r24">Turkey||TR</row>
+    <row label="r25">UAE||AE</row>
+    <row label="r26">Argentina||AR</row>
+    <row label="r27">Brazil||BR</row>
+    <row label="r28">Venezuela||VE</row>
+    <row label="r29">Columbia||</row>
+    <row label="r30">Switzerland||CH</row>
+    <row label="r31">Portugal||PT</row>
+    <row label="r32">Canada||CA</row>
+    <row label="r33">Mexico||MX</row>
+    <row label="r34">Malaysia||MY</row>
+    <row label="r35">South Africa||ZA</row>
+    <row label="r36">Tunisia||TN</row>
+    <row label="r37">Belgium||BE</row>
+    <row label="r38">Netherlands||NL</row>
+    <row label="r39">Israel||IL</row>
+    <row label="r40">Saudi Arabia||SA</row>
+    <row label="r41">Finland||FI</row>
+    <row label="r42">New Zealand||NZ</row>
+    <row label="r43">Singapore||SG</row>
+    <row label="r44">Chile||CL</row>
+    <row label="r45">Taiwan||TW</row>
+    <row label="r46">Hong Kong||HK</row>
+    <row label="r47">Indonesia||ID</row>
+    <row label="r48">Philipines||PH</row>
+  </radio>
+
+  <suspend/>
+
+  <exec>
+"""
+if Source.any:
+  PolicyText.val = Source.val
+  PolicyLink.val = Source.val
+  SupportText.val = Source.val
+  SupportEmail.val = Source.val
+blankSupportEmail.val = 0
+"""
+  </exec>
+
+  <exec>
+srcRecode = 0
+try:
+  srcRecode = int(src)
+except:
+  False
+
+try:
+  if (srcCode ge 64 and srcCode le 66) or (srcCode == 6 or srcCode == 42):
+      Memberlink.val = Memberlink.r1.index 
+  else:
+      Memberlink.val = Memberlink.r2.index
+except:
+  False
+
+try:
+	DCHANNEL.val = DCHANNEL.attr('r%s' % sc).index
+except Exception:
+	pass
+  </exec>
+
+  <exec>
+p.tmp = ''
+  </exec>
+
+  <suspend/>
+
+  <radio 
+   label="dWave"
+   randomize="0"
+   translateable="0"
+   where="none">
+    <title>Dummy - Punched from entry link</title>
+    <row label="r1">Wave 1</row>
+    <row label="r2">Wave 2</row>
+    <row label="r3">Wave 3</row>
+    <row label="r4">Wave 4</row>
+    <row label="r5">Wave 5</row>
+    <row label="r6">Wave 6</row>
+    <row label="r7">Wave 7</row>
+    <row label="r8">Wave 8</row>
+    <row label="r9">Wave 9</row>
+    <row label="r10">Wave 10</row>
+    <row label="r11">Wave 11</row>
+    <row label="r12">Wave 12</row>
+    <row label="r999">Wave not punched</row>
+  </radio>
+
+  <textarea 
+   label="Subsid"
+   height="1"
+   randomize="0"
+   translateable="0"
+   where="none"
+   width="30">
+    <title>Subsid - For Data</title>
+  </textarea>
+</block>
+
+<block label="brnjumpto" cond="gv.survey.root.state.testing and jumpto" builder:title="JumpTo - please remove this block when go living">
+  <exec>
+try: rnjumpto.val = rnjumpto.attr(jumpto).index
+except: pass
+try: rnjumpto.val = int(gv.request.get('jumpto0'))
+except: pass
+p.tmp = p.tmp + str(rnjumpto.val) + "; "
+  </exec>
+
+  <select 
+   label="rnjumpto"
+   cond="jumpto =='all' and not gv.request.get('jumpto0')&gt;'0'"
+   optional="1"
+   translateable="0"
+   where="survey,notdp">
+    <title>Please select a question to jump to.</title>
+    <choice label="skip">Skip</choice>
+    <style name="question.after" wrap="ready"><![CDATA[
+var newSelect = $ (".answers select").clone();
+newSelect.attr("name","jumpto0");
+newSelect.attr("id", "jumpto0");
+newSelect.find("option").attr("selected",false).first().remove();
+newSelect.find("option").first().text("Jump to");
+sessionStorage.jumptoSelect = newSelect[0].outerHTML;
+]]></style>
+  </select>
+</block>
+
+<suspend/>
+
+<exec>
+# set flag for internal changes not impacting client data
+hChangeFlag.val = 0
+</exec>
+
+<radio 
+  label="hChangeFlag"
+  where="data">
+  <title>Hidden: flag changes for QS</title>
+  <row label="r1">Change Management 1</row>
+  <row label="r2">Change Management 2</row>
+  <row label="r3">Change Management 3</row>
+  <row label="r4">Change Management 4</row>
+</radio>
+
+<checkbox 
+  label="Import_Flag"
+  where="data">
+  <title>Flag respondents that were imported from previous project</title>
+  <row label="r1"/>
+  <row label="r2"/>
+  <row label="r3"/>
+</checkbox>
+
+<suspend/>
+
+<exec>
+# SET DTRACK 
+dTrack.r1.val = dTrack.r1.index
+</exec>
+
+<exec>
+if (list=='2') or list == '0':
+    hSampleSource.val = hSampleSource.r1.index
+    
+    
+elif list=='8':
+    hSampleSource.val = hSampleSource.r2.index
+    
+    
+elif list=='7' or (list=='2'):
+    hSampleSource.val = hSampleSource.r3.index
+</exec>
+
+<radio 
+  label="COUNTRYSAMPLE"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Hidden: To punch country sampling for:</title>
+  <comment>Select one</comment>
+  <exec>
+try:
+	COUNTRYSAMPLE.val = COUNTRYSAMPLE.attr('r%s' % c).index
+except Exception:
+	pass
+  </exec>
+
+  <row label="r1">UK only</row>
+  <row label="r2">US only</row>
+  <row label="r32">CA only</row>
+  <row label="r27">BR only</row>
+  <row label="r47">ID only</row>
+</radio>
+
+<suspend/>
+
+<radio 
+  label="hSampleSource"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Hidden: Track sample source for live study. Do not change during testing.</title>
+  <row label="r1">Dynata Sample</row>
+  <row label="r2">CINT Sample</row>
+  <row label="r3">New sample</row>
+  <row label="r4">Cognitive Test</row>
+</radio>
+
+<term label="term_open" cond="0 and list=='0' and str(gv.survey.root.state) != 'testing'">Term respondents from open source</term>
+
+<suspend/>
+
+<exec cond="hSampleSource.but(hSampleSource.r4).any">
+quota_cells = gv.survey.root.quota.getQuotaCells()
+current, limit, overquota = quota_cells["/Settings/hSampleSource%s/Interview_type" % hSampleSource.selected.label]
+
+print current, limit,overquota
+if limit == 0:
+    INTERVIEW_TYPE.val = INTERVIEW_TYPE.r1.index
+elif limit == 1:
+    INTERVIEW_TYPE.val = INTERVIEW_TYPE.r2.index
+</exec>
+
+<radio 
+  label="INTERVIEW_TYPE"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Soft launch/Initial testing or Full Launch. Punching is based on the "Interview Type" quota switch.</title>
+  <row label="r1">Soft Launch</row>
+  <row label="r2">Full Launch</row>
+</radio>
+
+<suspend/>
+
+<quota label="TotalOverall" overquota="noqual" sheet="Overall"/>
+
+<suspend/>
+
+<note>Start = Questionnaire</note>
+<select 
+  label="Q10C"
+  sliderpoints:legendPosition="Above Slider"
+  sliderpoints:showRange="0"
+  sliderpoints:track_css="background-color: #F4F9FF;"
+  ss:questionClassNames="sq-sliderpoints"
+  uses="sliderpoints.3">
+  <title>How likely are you to recommend our services to your peer group? </title>
+  <comment>Please choose a position on the scale.</comment>
+  <choice label="ch1">Not at all likely</choice>
+  <choice label="ch2"/>
+  <choice label="ch3"/>
+  <choice label="ch4"/>
+  <choice label="ch5">Extremely likely</choice>
+  <choice label="ch10" sliderpoints:OO="1">Don't Know</choice>
+  <style name="page.head"><![CDATA[
+<style>
+.answers {
+  position: relative;
+}
+ .sq-sliderpoints .sq-sliderpoints-container {
+    min-height: 130px;
+}
+ .sq-sliderpoints .ui-slider .ui-slider-handle i{display:none;}
+.sq-sliderpoints .sliderpoints_ooLegend{
+  font-style:normal;
+  font-size: 16px;
+  line-height:30px;
+}
+.sliderpoints_ooLegend label input {
+  display: none;
+}
+.sliderpoints_ooLegend{
+ position:relative;
+}
+.sliderpoints_ooLegend label span{
+ padding-left:30px;
+}
+.sliderpoints_ooLegend label span:before,.sliderpoints_ooLegend label span:after {
+  content: "";
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  left: 18%;
+  top: 60%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+\@media (min-width: 768px) {
+  .sliderpoints_ooLegend label span:before,.sliderpoints_ooLegend label span:after {
+    top: 64%;
+  } 
+}
+
+.sliderpoints_ooLegend label span:before {
+  width: 17px;
+  height: 17px;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+.sliderpoints_ooLegend.selected label span:before {
+  border-color: #00ABFF
+}
+
+.sliderpoints_ooLegend.selected label span:after {  
+  width: 11px;
+  height: 11px;
+  background: #00ABFF;  
+  z-index: 2;    
+}
+.sliderpoints-oolegenditem.sliderpoints-selected {
+    color: #333!important;
+}
+ \@media (min-width: 768px){
+ .sq-sliderpoints .sq-sliderpoints-container {
+    width: 100% !important;
+    /*margin-left: 50px;*/
+    margin-left: 5%;
+} 
+ .sq-sliderpoints .ui-slider .ui-slider-handle {
+    background-color:transparent !important;
+    border-color:transparent !important;
+    box-shadow:none !important; 
+    /*left:-5% !important;  */
+ }
+ .sq-sliderpoints .ui-slider .ui-slider-handle:before {
+   content: "";
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+ } 
+ .sq-sliderpoints .ui-slider .ui-slider-handle:before {
+  width: 15px;
+  height: 15px;
+  background:#00ABFF;
+  border: 1px solid transparent;
+ }
+   .sq-sliderpoints .sq-sliderpoints-container .sliderpoints_ooLegend{
+    width: 22%!important;
+    float: left !important;
+    padding-top: 10px;
+    position: absolute;
+    margin-top:22px;
+    /*left: 74%;*/
+    right: 0;
+    max-width: 250px;
+    margin-left: 0px !important;
+    margin-right: 0;
+  }
+  .sq-sliderpoints .sq-sliderpoints-container .ui-slider,.sq-sliderpoints .sq-sliderpoints-container .sliderpoints_legend,.sq-sliderpoints .sq-sliderpoints-container .sliderpoints_circleLegend{
+   margin-left:0;float: left !important; width:70%; margin-left: 0 !important;
+  }
+  .sq-sliderpoints .sq-sliderpoints-container .sliderpoints_circleLegend{
+   margin-bottom:50px;
+  }
+ }
+ \@media only screen and (max-width: 767px){
+ .sliderpoints_ooLegend {
+   max-width:220px;
+   top:50%;
+   margin-left: auto !important;
+   margin-right: auto !important;
+ } 
+ span.sliderpoints-legenditem {
+    font-size: 1rem;
+ }
+}
+ </style>
+]]></style>
+  <style name="question.after"><![CDATA[
+<script type="text/javascript">
+function detectTool(){
+  setTimeout(function() {
+      if($ ('.sq-sliderpoints  .sq-sliderpoints-container .ui-slider').length>0){
+        if (parseInt($ ('.sq-sliderpoints-container .ui-slider-handle').css('left').split('px')[0]) < 0) {
+          $ ('.sq-sliderpoints-container .ui-slider-handle').css('left', '-5%');
+        }
+        addAdvancedToolEvent();     
+      }
+      else{
+        detectTool();
+      }
+  },300);
+}
+detectTool();
+function addAdvancedToolEvent(){
+  $ ("input.sliderpoints_OO").on('change',function() {
+    if ($ (this)[0].checked) {
+      console.log('slide dk checked');
+      $ (this).parent().parent().addClass('selected');
+    }
+    else {
+      console.log('slide dk unchecked');
+      $ (this).parent().parent().removeClass('selected');
+    }
+  });
+}
+</script>
+]]></style>
+</select>
+
+<suspend/>
+
+<radio 
+  label="QSemiDiff"
+  grouping="rows"
+  rowLegend="both">
+  <title>For each of the following, please indicate if you agree with statement on the left or on the right.</title>
+  <comment>Select one for each.</comment>
+  <col label="c1"><span class="sm-visibile">1</span></col>
+  <col label="c2"><span class="sm-visibile">2</span></col>
+  <col label="c3"><span class="sm-visibile">3-</span>neutral</col>
+  <col label="c4"><span class="sm-visibile">4</span></col>
+  <col label="c5"><span class="sm-visibile">4</span></col>
+  <col label="c99"><span class="sm-visibile">99</span>Not Applicable</col>
+  <row label="r1" rightLegend="Games should always be free">I'm willing to pay for a good game</row>
+  <row label="r2" rightLegend="I prefer freemium games (start free, buy in game later)">I prefer to pay for a game upfront and not have in game purchases</row>
+  <row label="r3" rightLegend="Completing a game is not as important as enjoying it">Once I start a game, I will usually complete it</row>
+  <row label="r4" rightLegend="I prefer linear games / a story or a path that I can follow">I prefer a game that I can freely explore</row>
+  <style name="page.head"><![CDATA[
+<style>
+.sm-visibile{display:none;}
+\@media screen and (max-width: 480px){
+	.grid th,.grid td{text-align:center;}
+	.grid td .cell-sub-wrapper{width:100%;}
+	.sm-visibile{display:inline;}
+	.cell-sub-column.cell-input{width:50%;text-align:right;}
+	.checkbox .cell-text, .radio .cell-text{text-align:left;width:50%;}
+	.row-legend-left {border-bottom:1px solid #eee;}
+	.row-legend-right {border-top:1px solid #eee;}
+ }
+ .grid.grid-table-mode .row.row-elements{display:none;}
+</style>
+<script type="text/javascript">
+      function displayRows (currRow){
+      	 var rowIndex = parseInt(currRow.attr('rowIndex'));
+      	 var nextRow = rowIndex+1;
+      	 for (var i = nextRow; i>=0; i--) {
+      	 	$ ('tr.row.row-elements-'+i).css('display','table-row');
+      	 }
+      
+      } 
+      $ (document).ready(function(){
+      		$ ('tr.row.row-elements').each(function(index){
+      				$ (this).addClass('row-elements-'+index).attr('rowIndex',index);
+      	    });      
+      		if( $ ('.input.radio:checked').length>0){
+      			$ ('tr.row.row-elements').each(function(){
+      				$ (this).css('display','table-row');
+      			});
+      		}
+      		else{
+      			$ ('tr.row.row-elements:first').css('display','table-row');
+      		}
+
+            $ ('.input.radio').on( "change", function() {
+				console.log('radio changed',$ (this));
+				var currentRow = $ (this).closest( ".row.row-elements" );
+				displayRows (currentRow);
+			});
+      });
+ </script>
+]]></style>
+</radio>
+
+<radio 
+  label="DCHANNEL"
+  optional="1"
+  where="none">
+  <title>Dummy to capture Dynamix Channel sample</title>
+  <row label="r1">Open</row>
+  <row label="r2">Loyalty (Codes 2 or 4)</row>
+  <row label="r3">Integrated</row>
+</radio>
+
+<suspend/>
+
+<text 
+  label="landingPage1"
+  size="25"
+  ss:rowClassNames="qsraIsExcluded-1"
+  where="survey,notdp">
+  <title><p class="main-title">Welcome!</p><br /><p class="sub-title">
+  Welcome and thank you for participating in this survey and helping with this research - your responses are very important to us. Please remember there are no right or wrong answers - it is your opinion that counts.
+  <br /><br />
+  This survey will take about xx minutes to complete.
+ <br /><br />
+All your answers will be analyzed only in combination with those of other participants, are completely confidential, and will be used only for market research purposes.
+<br />
+  </p></title>
+  <row label="r1">item 1</row>
+  <style name="page.head"><![CDATA[
+<style>
+.answers{display:none;}
+
+.survey-page {
+   background-image: url(//ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/BackgroundDarkBlueDesktop.png)!important;
+}
+
+.survey-body,.question{background-color:transparent;}
+.question-text{color:#fff;}
+.progress-bar{display:none;}
+.survey-buttons{left:0;width:80px;margin-left:60px;}
+.main-title{font-size: 3.5rem;line-height:normal;}
+.survey-body{padding-top:75px; margin-top:20px; }
+.logo-left{/*display:block;*/display:none;}
+.question {margin-top:20px; }
+\@media only screen and (max-width: 480px) {
+.question-text{text-align:center;}
+.survey-buttons{ margin-left:0;width:100%;} #btn_continue{margin-left:auto;margin-right:auto;}
+.question-text p{font-size: 1rem;}
+.question-text p.main-title{font-size: 2.5rem;} .question-text p.sub-title{font-size:1.7rem;}
+}
+
+.question-text {margin-bottom: 5em;}
+#btn_randomize {visibility: hidden;}
+</style>
+]]></style>
+  <style name="question.after"><![CDATA[
+<script type="text/javascript">
+$ (document).ready(function () {
+    $ ('#btn_continue').val("${res.BeginButton}");
+});
+</script>
+]]></style>
+</text>
+
+<suspend/>
+
+<radio 
+  label="AccordionTest"
+  shuffle="rows,cols"
+  surveyDisplay="mobile"
+  where="none">
+  <title>SHOWN FOR THEME TESTING ONLY How frequently do you read, view, or listen to content on each of these media publications/outlets?</title>
+  <comment>Please select one for each media publication/outlet.</comment>
+  <col label="c1" value="1">Less than once a month</col>
+  <col label="c2" value="2">Once a month</col>
+  <col label="c3" value="3">A few times per month</col>
+  <col label="c4" value="4">Once a week</col>
+  <col label="c5" value="5">A few times per week</col>
+  <col label="c6" value="6">Once a day or more</col>
+  <row label="r1">Brand 1</row>
+  <row label="r2">Brand 2</row>
+  <row label="r3">Brand 3</row>
+  <row label="r4">Brand 4</row>
+  <row label="r5">Brand 5</row>
+  <row label="r6">Brand 6</row>
+  <row label="r7">Brand 7</row>
+  <row label="r8">Brand 8</row>
+  <style name="page.head"><![CDATA[
+<style>
+.grid-table-mode .element {/*height:97px;*/}
+.grid.grid-table-mode.setWidth {
+    width: 99.8%;
+    margin-bottom:20px;
+}
+.grid.grid-table-mode .colCount-6 .col-legend {
+    width: 7.5%;    
+}
+\@media only screen and (max-width: 750px) {
+.grid.grid-table-mode .colCount-6 .col-legend {
+   font-size:1rem;   
+}
+}
+.grid.grid-table-mode .nonempty.element{
+  display: table-cell!important;
+}
+.grid-list-mode {
+  padding: 0px 7px;
+}
+.grid.grid-list-mode .cell.checked {
+  background-color: #E2F2FF !important;
+}
+.grid.grid-list-mode tr.answered .cell,.grid.grid-list-mode tr.answered .maccord-legend{
+  background-color:#E2F2FF !important;
+}
+
+/**** ADDED STYLING FOR ROWS WITH ERRORS ****/
+.answers tr.row-elements.hasError .row-legend, 
+.answers tr.row-elements.hasError .maccord-legend{
+  background-color: #FF7240 !important;
+}
+</style>
+]]></style>
+  <style name="question.after"><![CDATA[
+<link rel="stylesheet" href="//ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/maccord.css" />
+<script src='//ssiprojects.s3.amazonaws.com/rnd/template/factworks/decipher/maccord.v.1.3.js'></script>
+]]></style>
+</radio>
+
+<suspend/>
+
+<checkbox 
+  label="ButtonTest"
+  atleast="1"
+  atm1d:numCols="4"
+  atm1d:showInput="0"
+  atm1d:viewMode="Tiled"
+  fir="off"
+  shuffle="rows"
+  uses="atm1d.9"
+  where="none">
+  <title>SHOWN FOR THEME TESTING ONLY Which of the following media publications/outlets have you heard of?</title>
+  <comment>Please select all that apply. </comment>
+  <row label="r1">Brand 1</row>
+  <row label="r2">Brand 2</row>
+  <row label="r3">Brand 3</row>
+  <row label="r4">Brand 4</row>
+  <row label="r5">Brand 5</row>
+  <row label="r6">Brand 6</row>
+  <row label="r7">Brand 7</row>
+  <row label="r8">Brand 8</row>
+  <row label="r997" exclusive="1" randomize="0">None of the above</row>
+</checkbox>
+
+<suspend/>
+
+<text 
+  label="QCT_0"
+  optional="0"
+  size="10">
+  <title>Please enter an interview number. Ask the interviewer for advice.</title>
+  <row label="r1"/>
+  <style label="numeric_input_style1" name="el.text"><![CDATA[
+\@if row.styles.ss.preText or this.styles.ss.preText
+    ${row.styles.ss.preText or this.styles.ss.preText or ""}&nbsp;
+\@endif
+<input type="number" name="$(name)" id="$(id)" value="$(value)" size="$(size)" class="input text-input" $(extra)/>
+\@if row.styles.ss.postText or this.styles.ss.postText
+    &nbsp;${row.styles.ss.postText or this.styles.ss.postText or ""}
+\@endif
+]]></style>
+  <style label="numeric_input_style2" name="question.after"><![CDATA[
+<style>
+\@media only screen and (min-width: 500px) and (max-width: 768px) {
+  .number .element.OneColumnEl, .text .element.OneColumnEl {
+    padding: 1px !important;
+  }
+}
+input[type=number] {
+    max-width: 100%;
+}
+.number input[type='number'] {
+    width: 50px;
+    height: 30px;
+    font-size: 17px;
+    text-align: center;
+}
+
+.number .element:last-child {
+  /*margin-top: 8px;*/
+    float: left;
+    width: 44%;
+}
+.number .element {
+    float: left;
+    margin-right: 10px;
+    padding-left: 15px !important;
+    border-radius: 2px;
+    min-height: 60px;
+}
+
+.element {
+    padding: .4em .4em .4em 0;
+}
+
+.element {
+    float: left;
+    /*margin-left: 18px;*/
+    padding-left: 23px;
+    padding-bottom: 1em;
+    padding-top: 0.8em;
+}
+
+.radio .element.OneColumnEl, .checkbox .element.OneColumnEl{
+ padding: 0px 8px 5px 15px;
+ width:66.5%;
+}
+span.cell-sub-wrapper.cell-legend-right {
+    margin-top: 7px;
+}
+
+.number .element:last-of-type {
+    float: left;
+    width: 50%;
+   /* background: #F5F6FA;*/
+}
+
+.number .element.even {
+   /* background: #F5F6FA; */
+    width: 15%;
+    padding: 13px;
+}
+
+.no-answer+span.fir-icon svg {
+  display: none;
+}
+
+.no-answer+span.fir-icon:before, .no-answer+span.fir-icon:after {
+  content: "";
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.no-answer+span.fir-icon:before {
+  width: 17px;
+  height: 17px;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.no-answer+span.fir-icon.selected:before {
+  border-color: #00ABFF
+}
+
+.no-answer+span.fir-icon.selected:after {  
+  width: 11px;
+  height: 11px;
+  background: #00ABFF;  
+  z-index: 2;    
+}
+
+\@media only screen and (min-width: 500px) {
+.number .element.OneColumnEl input[type='number']{
+    margin: 13px auto;
+    display: block;
+ }
+}
+
+\@media only screen and (min-width: 768px) {
+.number .element.OneColumnEl input[type='number']{
+    margin: 12px auto;
+ }
+}
+
+\@media only screen and (max-width: 480px) {
+.number :last-of-type.element{
+ /*margin-left:10px;*/
+ padding-left:10px;
+ margin-right:5px;
+ padding-top:8px;
+ padding-bottom:8px;
+ /*width:58%;*/
+ width: 100%;
+}
+.number .element.even{
+ margin-left:0;
+ margin-right:0px;
+ /*width:35%;*/
+ width: 100%;
+ padding:13px 8px !important;
+}
+.number .element.even input[type='number']{
+ width:100%;
+}
+.number .element{
+ padding-left:8px !important;
+}
+.number :last-of-type.element .cell-text label{
+ font-size:1rem !important;
+}
+.radio .element.OneColumnEl, .checkbox .element.OneColumnEl{
+ width:96%;
+}
+}
+
+.number .element:hover, .text .element:hover,
+.number .element.checked, .text .element.checked  {
+    background: #E2F2FF !important;
+}
+
+.number .element:hover, .text .element:hover,
+.number .element.checked, .text .element.checked {
+    background: #E2F2FF !important;
+}
+
+/*
+.element.even.groupingRows.OneColumnEl {
+    position: relative;
+}
+.element.even.groupingRows.OneColumnEl:after {
+    content: 'years';
+    position: absolute;
+    right: 15%;
+    top: 40%;    
+}*/
+
+.number .element.OneColumnEl input[type='number'] {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 5px;
+      width: 5em;
+}
+
+\@media screen and (max-width: 767px) {
+    .number .element.OneColumnEl input[type='number'] {
+        display: block;
+        margin: 0 auto;
+    }
+    span.cust-label {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 8px;
+    }    
+}
+
+
+
+.answers-list {
+    display: grid;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+  .answers-list .qaCode.label {max-width:50px;}
+</style>
+<script type="text/javascript">
+$ ( document ).ready(function() {
+   $ ('input[type="number"]').attr('inputmode','decimal');
+});
+</script>
+]]></style>
+  <style name="page.head"><![CDATA[
+<style>
+  .text-input {width:80px;}
+  .text .element:last-of-type {
+    padding-left: 0;
+  }
+  .answers-list .qaCode.label {max-width:50px;}
+  </style>
+]]></style>
+  <style name="question.after"><![CDATA[
+<script type="text/javascript">
+  var $ = jQuery;
+  
+  $ (".element .cell-sub-wrapper").click(function() {
+    $ (".element input[type='number']").text("").val("");
+  });
+  
+  $ (".element.even").click(function() {
+    $ (".element.even input[type='number']").prop('disabled', false);
+    $ (".element.even input[type='number']").focus();
+    $ (".element .cell-input .fir-icon.selected").click();    
+  });
+  </script>
+]]></style>
+</text>
+
+<radio 
+  label="Q0">
+  <title>Please select the language for this survey.</title>
+  <comment>Please select one.</comment>
+  <row label="r1" value="1">English</row>
+  <row label="r2" value="2">French</row>
+</radio>
+
+<suspend/>
+
+<radio 
+  label="Q1">
+  <title>Please indicate your gender.</title>
+  <comment>Please select one.</comment>
+  <row label="r1" value="1">Female</row>
+  <row label="r2" value="2">Male</row>
+  <row label="r3" open="1" openOptional="1" openSize="25" ss:rowClassNames="spacer" value="3">Prefer to self-describe:</row>
+  <row label="r99" value="99">Prefer not to say</row>
+</radio>
+
+<suspend/>
+
+<exec>
+if Q1.r1 or Q1.r2:
+	GENDER.val = Q1.val
+if	Q1.r3 or Q1.r99:
+	GENDER.val = GENDER.attr(ishuffle(["r1","r2"])[0]).index
+</exec>
+
+<radio 
+  label="GENDER"
+  optional="1"
+  where="execute,survey,report">
+  <title>Hidden: To punch the gender based on Q1"</title>
+  <row label="r1" value="1">Female</row>
+  <row label="r2" value="2">Male</row>
+</radio>
+
+<suspend/>
+
+<number 
+  label="Q2"
+  optional="0"
+  rowLegend="right"
+  size="5"
+  verify="range(0,99)">
+  <title>Please indicate your age.</title>
+  <comment>Please enter whole numbers only.</comment>
+  <row label="r1">years</row>
+  <noanswer label="r999">Prefer not to say</noanswer>
+  <style cond="1" copy="numeric_input_style1"/>
+  <style cond="1" copy="numeric_input_style2"/>
+</number>
+
+<suspend/>
+
+<exec>
+if gv.isSST():
+    Q2.r1.val = ishuffle(range(17,57))[0]
+</exec>
+
+<exec cond="1">
+if gv.isSST():
+    GENDER.val = ishuffle([0,1,2])[0]
+</exec>
+
+<exec>
+age = Q2.r1.ival
+gender = 0
+
+if GENDER.r1:
+    gender = 1 # Female 
+elif GENDER.r2:
+    gender = 2  # Male
+
+
+rlabel =''	
+
+if gender == 2:
+    if age in range(18,25):
+        rlabel = 'r1'
+    elif age in range(25,30):
+        rlabel = 'r2'
+    elif age in range(30,35):
+        rlabel = 'r3'
+    elif age in range(35,45):
+        rlabel='r4'
+    elif age in range(45,55):
+        rlabel='r5'
+    elif age in range(55,65):
+        rlabel='r6'
+
+
+elif gender == 1:
+    if age in range(18,25):
+        rlabel = 'r7'
+    elif age in range(25,30):
+        rlabel = 'r8'
+    elif age in range(30,35):
+        rlabel = 'r9'
+    elif age in range(35,45):
+        rlabel='r10'
+    elif age in range(45,55):
+        rlabel='r11'
+    elif age in range(55,65):
+        rlabel='r12'
+
+
+if rlabel:
+    age_gender.val = age_gender.attr(rlabel).index
+print "rlabel " + rlabel
+</exec>
+
+<radio 
+  label="age_gender"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Hidden: age_gender variable for quotas</title>
+  <row label="r1" value="1">Male / 18-24</row>
+  <row label="r2" value="2">Male / 25-29</row>
+  <row label="r3" value="3">Male / 30-34</row>
+  <row label="r4" value="4">Male / 35-44</row>
+  <row label="r5" value="5">Male / 45-54</row>
+  <row label="r6" value="6">Male / 55-64</row>
+  <row label="r7" value="7">Female / 18-24</row>
+  <row label="r8" value="8">Female / 25-29</row>
+  <row label="r9" value="9">Female / 30-34</row>
+  <row label="r10" value="10">Female / 35-44</row>
+  <row label="r11" value="11">Female / 45-54</row>
+  <row label="r12" value="12">Female / 55-64</row>
+</radio>
+
+<suspend/>
+
+<radio 
+  label="Q3">
+  <title>What is the highest level of education you have completed?</title>
+  <comment>Please select one.</comment>
+  <row label="r1">Completed some high school</row>
+  <row label="r2">High school graduate</row>
+  <row label="r3">Took some college courses, did not graduate/get a degree</row>
+  <row label="r4">Graduated from a college (Associate degree, Bachelor's degree)</row>
+  <row label="r5">Completed a postgraduate degree (Masters, PhD, MD, JD)</row>
+  <row label="r6">Completed some high school</row>
+  <row label="r7">High school graduate</row>
+  <row label="r8">Completed some college or university</row>
+  <row label="r9">College or university degree</row>
+  <row label="r10">Completed some graduate school</row>
+  <row label="r11">Master's degree</row>
+  <row label="r12">Doctorate, law or professional degree</row>
+  <row label="r13">Below Fundamental Education Diploma</row>
+  <row label="r14">Fundamental Education Diploma</row>
+  <row label="r15">Upper Secondary Education Diploma</row>
+  <row label="r16">Higher Education (Bachelor, Licentiate, Technological)</row>
+  <row label="r17">Postgraduate Degree (Specialist, Master, Doctor)</row>
+  <row label="r18">Primary school certificate or lower</row>
+  <row label="r19">Junior secondary school certificate</row>
+  <row label="r20">Senior secondary school certificate</row>
+  <row label="r21">Diploma 1-4, Bachelor, Master, Specialist I</row>
+  <row label="r22">Doctor, Specialist II</row>
+  <row label="r23">No formal qualifications</row>
+  <row label="r24">Secondary school</row>
+  <row label="r25">GCSE or equivalent, NVQ Level 1-2</row>
+  <row label="r26">A/AS Levels or equivalent, NVQ Level 3</row>
+  <row label="r27">Apprenticeship</row>
+  <row label="r28">Foundation degree or equivalent, NVQ Level 4-5</row>
+  <row label="r29">Bachelor's degree</row>
+  <row label="r30">Master's degree, Post-graduate diploma, Doctorate</row>
+  <row label="r99" ss:rowClassNames="spacer">Prefer not to say</row>
+</radio>
+
+<suspend/>
+
+<radio 
+  label="Q5">
+  <title>Are you of Hispanic, Latino or Spanish origin?</title>
+  <comment>Please select one.</comment>
+  <row label="r1" value="1">Yes</row>
+  <row label="r2" value="2">No</row>
+  <row label="r99" ss:rowClassNames="spacer" value="99">Prefer not to say</row>
+</radio>
+
+<checkbox 
+  label="Q6"
+  atleast="1">
+  <title>Which best describes your <strong>race</strong>?</title>
+  <comment>Please select all that apply.</comment>
+  <row label="r1">Asian</row>
+  <row label="r2">African American or Black</row>
+  <row label="r3">American Indian or Alaska Native</row>
+  <row label="r4">Caucasian or White</row>
+  <row label="r5" open="1" openSize="25" ss:rowClassNames="spacer">Other (please specify):</row>
+  <row label="r998" cond="0" exclusive="1">Don’t know</row>
+  <row label="r999" exclusive="1">Prefer not to say</row>
+</checkbox>
+
+<suspend/>
+
+<exec>
+if gv.isSST():
+    Q4.val = ishuffle([01,2,3])[0]
+</exec>
+
+<exec>
+Hispanic_NA.r1.val = 0   
+
+if Q5.r1:
+    Ethnicity.val = Ethnicity.r1.index
+elif Q5.r2:
+    Ethnicity.val = Ethnicity.r2.index
+else:
+	Hispanic_NA.r1.val = 1
+</exec>
+
+<checkbox 
+  label="Hispanic_NA"
+  atleast="1">
+  <title>Hispanic_NA</title>
+  <comment>Select all that apply</comment>
+  <row label="r1">Hispanic N/A</row>
+</checkbox>
+
+<radio 
+  label="Ethnicity"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Hidden: Ethnicity (‘Hispanic/Non-Hispanic origin’). U.S. only. </title>
+  <row label="r1" value="1">Hispanic</row>
+  <row label="r2" value="2">Non-Hispanic</row>
+  <row label="r3" value="3">Hispanic N/A</row>
+</radio>
+
+<exec>
+selected = [eachRow for eachRow in Q5.rows if eachRow and eachRow.label not in ['r998','r999']]
+
+Multiple_races.r1.val = len(selected)
+
+print selected
+</exec>
+
+<number 
+  label="Multiple_races"
+  size="3"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Multiple_races (‘# races selected’)</title>
+  <row label="r1"/>
+</number>
+
+<suspend/>
+
+<exec>
+"""
+if Multiple_races.ival == 1:
+    if Q5.r1:
+        Race.val = 0
+    elif Q5.r2 or Q5.r3:
+        Race.val  = 1
+    elif Q5.r4:
+        Race.val = 2
+    elif Q5.r5:
+        Race.val = 3
+    elif Q5.r996:
+        Race.val = 5
+
+elif Multiple_races.ival &gt;=2:
+    Race.val = 4
+
+if Q4.r1 and (Q5.r998 or Q5.r999):
+    Race.val = 6
+"""
+
+if Multiple_races.ival == 1:
+    if Q5.r1:
+        Race.val = 0
+    elif Q5.r3 or Q5.r4:
+        Race.val  = 1
+    elif Q5.r2:
+        Race.val = 2
+    elif Q5.r5:
+        Race.val = 3
+    elif Q5.r996:
+        Race.val = 5
+
+elif Multiple_races.ival &gt;=2:
+    Race.val = 4
+
+if Q4.r1 and (Q5.r998 or Q5.r999):
+    Race.val = 5
+</exec>
+
+<radio 
+  label="Race"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Race</title>
+  <row label="r1" value="1">Black</row>
+  <row label="r2" value="2">Asian and Pacific Islander</row>
+  <row label="r3" value="3">American Indian</row>
+  <row label="r4" value="4">White</row>
+  <row label="r5" value="5">2+ races</row>
+  <row label="r6" value="6">Other</row>
+  <row label="r7" value="7">(Not in use) Hispanic</row>
+</radio>
+
+<suspend/>
+
+<note>=========================== END OF SCREENER ======================</note>
+<define label="LIST_TERM_POINTS">
+  <row label="r1">Q1 term - Panel age under 18 or greater than 55 or Prefer not to say</row>
+  <row label="r2">Q2 term  - Panel selected r999 Prefer not to say</row>
+  <row label="r3">Q3 term - Panel selected r999 Prefer not to say, Does not live in the USA (r997) or zip not found in lookup</row>
+  <row label="r4">Q4 term - Panel selected r998, r999</row>
+  <row label="r5">Q5 term - Panel selected r998, r999 and NOT Hispanic</row>
+  <row label="r6">Q6 term 1 - Panel quality check. Did not select option 3</row>
+  <row label="r7">Q6 term 2 - Panel quality check. More than one from r4-r7 selected</row>
+  <row label="r8">Q7 term - Panel selected r999</row>
+  <row label="r9">Q9 term 3 - Panel selected r999</row>
+  <row label="r10">Q9 term 2 - Panel has c1 or c2 greater than 125000</row>
+  <row label="r11">Q9 term 3 - Panel has HHI_Contribution is &gt; 1.5 (150%)</row>
+  <row label="r12">Q10 term - Panel selected r999</row>
+  <row label="r13">Q1 - Client list under 18</row>
+  <row label="r14">Q6 term - New panel quality check added March 11th. Respondent selected NONE of r2, r3, r8</row></define>
+<exec>
+# terminate logic
+
+# clear hTermPoints for back and forth testing
+
+for eachRow in hTermPoints.rows:
+    eachRow.val = None
+
+Terminate_reason.val = None
+
+rlabels= []
+# SET TERM POINTS
+
+for eachLabel in rlabels:
+    hTermPoints.attr(eachLabel).val = 1
+</exec>
+
+<checkbox 
+  label="hTermPoints"
+  translateable="0"
+  where="execute,survey,report">
+  <title>UPDATE ALL TERM POINTS Hidden: track all term conditions satisfied</title>
+  <insert source="LIST_TERM_POINTS"/>
+</checkbox>
+
+<suspend/>
+
+<exec>
+for eachRow in hTermPoints.rows:
+    if eachRow.val == 1:
+        Terminate_reason.val = Terminate_reason.attr(eachRow.label).index
+        break
+</exec>
+
+<radio 
+  label="Terminate_reason"
+  optional="1"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Reason for respondent termination. Punch with first term condition satisfied</title>
+  <insert source="LIST_TERM_POINTS"/>
+</radio>
+
+<suspend/>
+
+<note>======================== ADD TERMINATES HERE ====================</note>
+<note>======================== ADD QUOTAS HERE ========================</note>
+<suspend/>
+
+<note>======================== SECTION 2 : Goals *****START HERE*****========================</note>
+<exec when="init">
+def group_rows( question, grouped_rows ):
+    first_item_index = None
+    shuffle_order = [row.index for row in question.rows.order]
+
+    for index, row in enumerate( shuffle_order ):
+        if question.rows[row].label in grouped_rows:
+            if first_item_index == None:
+                first_item_index = index
+            else:
+                first_item_index += 1
+                shuffle_order.insert( first_item_index, shuffle_order.pop(index) )
+
+    question.rows.order = shuffle_order
+</exec>
+
+<suspend/>
+
+<note>End = Questionnaire</note>
+<suspend/>
+
+<text 
+  label="hQualityScoreAnalyze"
+  cond="p.qs['on']==1"
+  pii="4"
+  size="25">
+  <title><img src="//d2n88fe5uqdqty.cloudfront.net/rnd/template/loader.gif" /></title>
+  <row label="r1" ss:rowClassNames="qsScore">Score</row>
+  <row label="r2" ss:rowClassNames="qsStraightlineRanking">StraightlineRanking</row>
+  <row label="r3" ss:rowClassNames="qsSpeedingRanking">SpeedingRanking</row>
+  <row label="r4" ss:rowClassNames="qsRASRanking">RASRanking</row>
+  <row label="r5" ss:rowClassNames="qsPages">Pages</row>
+  <row label="r6" ss:rowClassNames="qsDistinctPages">DistinctPages</row>
+  <row label="r7" ss:rowClassNames="qsStraightlineCount">StraightlineCount</row>
+  <row label="r8" ss:rowClassNames="qsMatrixQuestionCount">MatrixQuestionCount</row>
+  <row label="r9" ss:rowClassNames="qsMatrixStraightlineStatuses">MatrixStraightlineStatuses</row>
+  <row label="r10" ss:rowClassNames="qsRASAverage">RASAverage</row>
+  <row label="r11" ss:rowClassNames="qsOpenEndsAnswered">OpenEndsAnswered</row>
+  <row label="r12" ss:rowClassNames="qsOpenEndScores">OpenEndScores</row>
+  <row label="r13" ss:rowClassNames="qsRVid">RVid</row>
+  <row label="r14" ss:rowClassNames="qsTransactionGuid">TransactionGuid</row>
+  <row label="r15" ss:rowClassNames="qsAccelerationRanking">AccelerationRanking</row>
+  <row label="r16" ss:rowClassNames="qsVelocityRanking">VelocityRanking</row>
+  <row label="r17" ss:rowClassNames="qsRedoRanking">RedoRanking</row>
+  <row label="r18" ss:rowClassNames="qsInactivityRanking">InactivityRanking</row>
+  <row label="r19" ss:rowClassNames="qsOutlierGroups">OutlierGroups</row>
+  <row label="r20" ss:rowClassNames="qsMode">Mode</row>
+  <row label="r21" ss:rowClassNames="qsOpenEndFlags">OpenEndFlags</row>
+  <row label="r99" ss:rowClassNames="qsRaw">Raw</row>
+  <style name="question.after"><![CDATA[
+<style>.answers { display:none; }</style>
+<input type="hidden" id="qualityscore_collect_disabled">
+<script>
+$ (document).ready(function(){
+    var submitted = 0;
+    $ ("#btn_continue, #btn_finish").hide();
+    function submitForm(){
+      if(!$ ('.qsRaw').find('input').val())
+        $ ('.qsRaw').find('input').val("timeout");
+      if(!submitted){
+        submitted = 1;
+        $ ("#btn_continue, #btn_finish").click().show();
+      }
+    }
+     
+    setTimeout(submitForm, 5000);
+     
+    try{
+      imperium_qualityscore.AnalyzeData(AnalyzeDataReponse);
+    }
+    catch(e){
+      console.error(e);
+      submitForm();
+    }
+     
+    function AnalyzeDataReponse(jsonData) {
+      if(${1 if gv.survey.root.state.testing else 0}){
+        console.log(JSON.stringify(jsonData));
+      }
+      try{ 
+        $ ('.qsRaw').find('input').val(JSON.stringify(jsonData));
+        if (jsonData.StatusCode == 200)
+        {
+            for(var key in jsonData){
+              if(typeof jsonData[key] !== 'object'){
+                 $ ('.qs' + key).find('input').val(jsonData[key]);
+              }
+              else{
+                 $ ('.qs' + key).find('input').val(JSON.stringify(jsonData[key]));
+              }
+            }  
+        }
+      }
+      catch(e){
+        $ ('.qsRaw').find('input').val(e.message);
+        console.error(e)
+      };
+      submitForm()
+    }
+})
+</script>
+]]></style>
+</text>
+
+<suspend/>
+
+<float 
+  label="pageTime"
+  onLoad="preciseTimePerPage()">
+  <title>.</title>
+  <virtual>
+preciseTimePerPageDelphi(data,this)
+  </virtual>
+
+</float>
+
+<suspend/>
+
+<note>DO NOT DELETE - Quality checks / Template codes</note>
+<style label="btn_continue" cond="QTheme.r3" mode="after" name="respview.client.css"><![CDATA[
+<style type="text/css">
+
+#btn_continue,#btn_goback,#btn_finish {
+
+/*background-color: #FFD200;
+border-color: #FFD200;
+    color: #404040;*/
+ background-color: #1ab3ff;
+border-color: transparent;
+    color: #fff;   
+    font-size: opx;height:32px;
+    /*width:90px;*/
+    width:75px;
+    font-family: Lato-regular,Arial,sans-serif;
+    border: 1px solid transparent;
+    /*box-shadow: 1px 1px 2px #696a69;
+    box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -moz-box-shadow: 1px 1px 2px rgba(105,106,105,.8);*/    
+    -webkit-appearance: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none  
+    -webkit-appearance: none;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    padding: .3em .5em;
+    margin: .1em 1em 1em 1em;
+    font-size:14px; 
+    font-weight:normal;
+}
+
+#btn_goback {
+//margin: .1em 30em 1em 1em;
+   
+}
+
+
+
+#btn_randomize {
+    background-color: #9ea69e;
+    color: #fff;
+    font-size: 1rem;
+    font-family: Arial,sans-serif;
+    border: 1px solid transparent;
+    border-radius: 0;
+//    margin: .1em 17em -5em 2em;
+    margin: 0em 3em 0em 3em
+}
+
+
+.button {
+    background-color: #696a69;
+    color: #fff;
+    font-size: 1rem;
+    font-family: Arial,sans-serif;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 2px #696a69;
+    box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -moz-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-appearance: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: .7em 1em;
+    margin: .111em
+    
+}
+
+
+.button:hover {
+    background-color: #0000FF;
+        color: #fff;
+    border: 2px solid #000;
+    
+}
+   </style>
+]]></style>
+<style label="btn_continueBasis" cond="QTheme.r4" mode="after" name="respview.client.css"><![CDATA[
+<style type="text/css">
+
+.rml-Ranking_6_0-container .rml-ranking-card .card-order, .rml-ranking-card.selected
+{background-color: #ea61ad !important;}
+
+.rml-Ranking_6_0-container .rml-ranking-card:hover
+{background-color: #f08ec4 !important;}
+
+.sq-cardsort-previous,.sq-cardsort-next,.sq-cardsort-previous.sq-cardsort-state-disabled, .sq-cardsort-next.sq-cardsort-state-disabled, 
+{
+color: #ffffff !important;
+}
+
+#btn_continue,#btn_goback,#btn_finish {
+
+background-color: #e21d89;
+border-color: #e32990;
+    color: #ffffff;
+    font-size: opx;height:42px;width:140px;
+    font-family: Arial,sans-serif;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 2px #ffffff;
+    box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -moz-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: .5em;
+    margin: .1em 1em 1em 1em;
+    font-size:14px; 
+    font-weight:bold;
+}
+
+#btn_goback {
+//margin: .1em 30em 1em 1em;
+   
+}
+
+
+
+#btn_randomize {
+    background-color: #9ea69e;
+    color: #fff;
+    font-size: 1rem;
+    font-family: Arial,sans-serif;
+    border: 1px solid transparent;
+    border-radius: 0;
+//    margin: .1em 17em -5em 2em;
+    margin: 0em 3em 0em 3em
+}
+
+
+.button {
+    background-color: #FFFFFF;
+    color: #fff;
+    font-size: 1rem;
+    font-family: Arial,sans-serif;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 2px #FFFFFF;
+    box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -moz-box-shadow: 1px 1px 2px rgba(105,106,105,.8);
+    -webkit-appearance: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: .7em 1em;
+    margin: .111em
+    
+}
+
+
+.button:hover {
+    background-color: #0000FF;
+        color: #fff;
+    border: 2px solid #000;
+    
+}
+   </style>
+]]></style>
+<suspend/>
+
+<style cond="decLang in ['hebrew','arabic']" mode="after" name="respview.client.css"><![CDATA[
+<style>
+ body { direction: rtl; }
+ .survey-buttons { text-align: right !important; }
+ #surveyContent, .survey-body, .question-text, .instruction-text,
+ .grid.grid-table-mode .row-legend, .grid-desktop-mode.grid-list-mode .cell-section,
+ .grid-single-col .cell, .grid[data-settings*='single-col'] .cell,
+ .noRows .grid.grid.grid-table-mode .colCount-1 .element,
+ .noRows .grid.grid.grid-table-mode .colCount-1 .col-legend { text-align: right !important; }
+ .survey-body .fir-hidden { left: auto !important; right: -9999px !important; }
+
+#btn_goback {
+margin: 0em 0em 0em 0em !important;
+   
+}
+
+#btn_randomize {
+    margin: 0em 0em 0em 3em !important;
+}
+</style>
+]]></style>
+<suspend/>
+
+<block label="b2" builder:title="All Functions">
+  <exec when="init">
+#REFER empower link for FUNCTIONS: http://surveytools.researchnow.com/rsntools/documentation/libraries/dstar/user/#!/home
+#http://speeders.researchnow.com/emPowerv6/toolkit.php
+
+#image security: none/standard/full
+#Standard image security disables mouse right click, texts/images selection, ctrl+p, ctrl+c, and ctrl+a.
+#Full image security disables ctrl+n, ctrl+t, f11, f12, plus the things disabled in standard image security.
+
+#labelsToArray(arrLabels)
+#getFullPath(gv)/getBaseUrl(gv)/getHostId(gv)
+#copyQ(toQ, fromQ)
+#domainValues(reqArray,qAttr)
+#categories(reqArray,qAttr)
+#anyCodes(qid, arrLabels)
+#getPanel(src)
+
+
+#FUNCTIONS: getsel(qid,scalecode) / my_shuffle(array) / loop_order(setOrderqid,orderCaptureQID) / prefill(PreFillQID,cond,maskRowsQID)
+
+#Get an array of precodes (e.g: returns codes selected in MC/SC/Grid for a specific scale precode(s))
+#For grids: getsel(q11.rows,[0,1]): pulls all rows that has selected scale codes 1,2; For sc/mc: getsel(q11.rows,0); 
+#syntax you can also use: rowCond="row.label in getsel(q11.rows,0)
+#You can update the below function to refer eachRow.index if you want to pull the index values instead of eachRow.label
+def getsel(qid,scalecode):
+    selected = []
+    if scalecode != 0:
+        for eachRow in qid:
+            if eachRow.val in scalecode:
+                selected.append(eachRow.label)
+    if scalecode == 0:
+        for eachRow in qid:
+            if eachRow:
+                selected.append(eachRow.label)
+   
+    return selected
+
+
+import random
+def my_shuffle(array):
+    random.shuffle(array)
+    return array
+
+#Usage: loop_order(dQ1Loop,dQ1LoopOrder)
+def loop_order(setOrderQid,orderCaptureQID):
+  arr1 = [x.index for x in setOrderQid.rows.order]
+  print arr1
+  for itr in range(len(arr1)):
+     if not (setOrderQid).rows[itr].any:
+        arr1.remove (itr)
+        print arr1
+  for itr in range(len(arr1)):
+    orderCaptureQID.cols[itr].val = arr1[itr]
+  return;
+
+
+#Prefill 0 in an OE numeric questions
+def prefill(PreFillQID,cond,maskRowsQID):
+  ans = []
+  if cond != 0: #If masking in answer list from another question. All precodes shown to be prefilled then use as: prefill(Q2,1,Q1)
+     for itr in range(len(maskRowsQID.rows)): 
+        if maskRowsQID.rows[itr].any:
+           ans.append(itr)
+           #print ans
+  if cond == 0: #If No masking in answer list. All precodes shown to be prefilled then use as: prefill(Q2,0,Q2)
+     for itr1 in range(len(PreFillQID.rows)): 
+       ans.append(itr1)
+       #print ans
+       
+  for x in range(len(ans)):
+       PreFillQID.rows[ans[x]].val = 0
+       #print ans     
+  return ans
+  #print ans
+
+
+ 
+
+#Sequential order validation works with masking as well.
+def seq(Q_label,numOfRow):        
+    cnt = 0
+    sel = []
+    
+    for x in Q_label.rows:
+        if x.displayed:
+            sel.append(x.label)
+            
+    for eachRow in Q_label.rows:
+       if eachRow.displayed:
+           if not eachRow.val:
+               cnt = cnt+1
+               
+    if cnt == len(sel):
+       error(ErrorMessages.r1.text) #Please provide an answer
+       
+    for itr in xrange(len(sel) - 1):
+       if not(Q_label.attr(str(sel[0])).val) and Q_label.attr(str(sel[itr+1])).val:
+           error(ErrorMessages.r6.text) #Please make sure you provide your response in the first text box.
+           
+       elif not Q_label.attr(str(sel[itr])).val and Q_label.attr(str(sel[itr+1])).val:
+           error(ErrorMessages.r7.text) #Please make sure you enter your responses in consecutive order.
+  </exec>
+</block>
+
+<suspend/>
+
+<radio 
+  label="ErrorMessages"
+  cond="0"
+  noTranslate="comment,title"
+  optional="1"
+  where="survey,report,notdp">
+  <title>HIDDEN QUESTION -- Error Messages</title>
+  <row label="r1" value="1">Please provide a response for this question</row>
+  <row label="r2" value="2">Please do not select 'None of these' if you have already provided another response</row>
+  <row label="r3" value="3">Please provide a maximum of X answers(s) for this question</row>
+  <row label="r4" value="4">Please select at least %minRequired% responses</row>
+  <row label="r5" value="5">Please select no more than %maxRequired% responses</row>
+  <row label="r6" value="6">Please make sure you provide a response in the first text box.</row>
+  <row label="r7" value="7">Please make sure you enter response(s) in consecutive order</row>
+</radio>
+
+<checkbox 
+  label="dTrack"
+  randomize="0"
+  translateable="0"
+  where="report,data">
+  <title>dTrack - Dummy holding the tracking details</title>
+  <row label="r1">Track 1</row>
+  <row label="r2">Track 2</row>
+  <row label="r3">Track 3</row>
+  <row label="r4">Track 4</row>
+  <row label="r5">Track 5</row>
+  <row label="r6">Track 6</row>
+  <row label="r7">Track 7</row>
+  <row label="r8">Track 8</row>
+  <row label="r9">Track 9</row>
+  <row label="r10">Track 10</row>
+</checkbox>
+
+<text 
+  label="rnentryurl"
+  cond="False"
+  pii="4"
+  size="200"
+  translateable="0"
+  where="execute,survey,notdp">
+  <title>Hidden- to store survey entry url</title>
+</text>
+
+<block label="blkQualityChecks" builder:title="Quality Checks" sst="0">
+  <exec>
+#######################################
+# Speeder Auto Check Settings:
+#######################################
+
+tplSpeederAutoCheckSettings.r0.val = '2' #On/Off settings (1 = On, 2 = Off) - this check On by default
+tplSpeederAutoCheckSettings.r1.val = '0.3' #Percentage of Median time used to check speeder
+tplSpeederAutoCheckSettings.r2.val = '30' #Minimum completes to start auto check
+tplSpeederAutoCheckSettings.r3.val = '1000' #Maximum completes used to calculate Median time
+
+#######################################
+# Straightliner Check Settings:
+#######################################
+
+tplStraightlinerSettings.r0.val = '2' #On/Off settings (1 = On, 2 = Off) - this check Off by default
+
+
+#######################################
+# Open End Check Settings:
+#######################################
+
+tplOpenEndSettings.r0.val = '2' #On/Off settings (1 = On, 2 = Off) - this check On by default
+
+#####
+# adjust other Straightliner Settings in isStraightliner() function 
+#######################################
+  </exec>
+
+  <text 
+   label="tplSpeederAutoCheckSettings"
+   randomize="0"
+   size="25"
+   translateable="0"
+   where="none">
+    <title>Speeder Auto Check Settings:</title>
+    <row label="r0">AutoCheck Speeder On/Off settings</row>
+    <row label="r1">Percentage of Median time used to check racer</row>
+    <row label="r2">Minimum completes to start auto check</row>
+    <row label="r3">Maximum completes used to calculate Median time</row>
+  </text>
+
+  <text 
+   label="tplStraightlinerSettings"
+   randomize="0"
+   size="25"
+   translateable="0"
+   where="none">
+    <title>Straightliner Settings:</title>
+    <row label="r0">Straightliner Check On/Off settings</row>
+  </text>
+
+  <text 
+   label="tplOpenEndSettings"
+   randomize="0"
+   size="25"
+   translateable="0"
+   where="none">
+    <title>Open end Settings:</title>
+    <row label="r0">Straightliner Check On/Off settings</row>
+  </text>
+
+  <suspend/>
+
+  <block label="blkSpeederAutoCheckAPI" builder:title="Speeder Auto Check API Call">
+    <exec>
+tt = int(timeSpent())
+mc = int(tplSpeederAutoCheckSettings.r3.val)
+
+# NA server = 101
+# CA server = 102
+# AU server = 103
+# UK server(survey-uk) = 104 
+
+server = getHostId(gv)
+p.speederDict = dict(pnum=gv.survey.path,ss=server,rid=record,tt=tt,mc=mc)
+    </exec>
+
+    <logic label="speederAutoCheckAPI" api:params="p.speederDict" api:url="http://speeders.researchnow.com/spdrchk/gbtSpeedTest.php" uses="api.1"/>
+    <exec>
+if speederAutoCheckAPI.status == 200:
+    outputAPI = simpleJsonLoads(speederAutoCheckAPI.r[1:-2])
+    medianTime.r1.val = outputAPI['medianTime']
+    medianTime.r2.val = outputAPI['completes']
+else:
+    speederAutoCheck.val = speederAutoCheck.r3.index
+    </exec>
+
+    <text 
+    label="medianTime"
+    randomize="0"
+    size="25"
+    translateable="0"
+    where="none">
+      <title>medianTime</title>
+      <row label="r1">medianTime</row>
+      <row label="r2">medianCompletes</row>
+    </text>
+  </block>
+
+  <suspend/>
+
+  <exec>
+#######################################
+# Run Quality Checks  
+#######################################
+
+
+if tplStraightlinerSettings.r0.val == '1':
+  isStraightliner()
+
+if tplOpenEndSettings.r0.val == '1': 
+    openEndCheck()
+    
+if tplSpeederAutoCheckSettings.r0.val == '1':
+    isSpeederAutoCheck()
+  </exec>
+
+  <block label="blkQualityCheckOpenEnds" builder:title="Quality Check Tracking Questions">
+    <exec when="init">
+def checkBadWords(txtToCheck):
+    badWord = False
+    import re
+    regex = re.compile(r'([^\d\s])\1{2,}')   #https://stackoverflow.com/questions/1660694/regular-expression-to-match-any-character-being-repeated-more-than-10-times
+
+    if (regex.search(txtToCheck) != None): badWord = True
+    swearWordsToCheck = swearWords()
+    for swearWord in swearWordsToCheck:
+        if txtToCheck.lower().find(swearWord) != -1: badWord = True
+    return badWord
+
+def swearWords():
+    return [
+  "shit",
+  "fuck",
+  "asshole",
+  "bitch",
+  "cunt",
+  "cock",
+  "slut",
+  "whore",
+  "asdf",
+  "dfg",
+  "qwer",
+  "zxcv",
+  "fgh"
+  ]   
+
+
+def openEndCheck():
+    openEndCheckFail = False
+    openEndQCheckList = []
+    for currentQuestion in allQuestions:  
+        if hasattr(allQuestions[currentQuestion],'o'):
+            openEndCheckQFail = False
+            if str(allQuestions[currentQuestion].o).lower().find('text',1) == 1:
+                if len(allQuestions[currentQuestion]) gt 1:
+                    for curTextVal in allQuestions[currentQuestion]:
+                        #print 'curTextVal {}'.format(curTextVal)
+                        if (checkBadWords(str(curTextVal))): openEndCheckQFail = True
+                else:
+                        if (checkBadWords(str(allQuestions[currentQuestion].val))): openEndCheckQFail = True
+                
+            if hasattr(allQuestions[currentQuestion],'rows'):
+                otherSpecifyRows = [x for x in allQuestions[currentQuestion].rows if hasattr(x,'open')]
+                for curOtherVal in otherSpecifyRows:
+                    if (checkBadWords(str(curOtherVal.open))): openEndCheckQFail = True
+            if hasattr(allQuestions[currentQuestion],'cols'):
+                otherSpecifyCols = [x for x in allQuestions[currentQuestion].cols if hasattr(x,'open')]
+                for curOtherVal in otherSpecifyCols:
+                    if (checkBadWords(str(curOtherVal.open))): openEndCheckQFail = True
+            if openEndCheckQFail == True:
+                if currentQuestion.lower() != 'subsid':
+                    openEndCheckFail = True
+                    openEndQCheckList.append(currentQuestion)
+    if openEndCheckFail == True:
+        openEndFlag.r1.val = True
+        openEndFlagFailedQuestions.val = ','.join(openEndQCheckList)
+    else: openEndFlag.r2.val = True
+    </exec>
+
+    <checkbox 
+    label="openEndFlag"
+    optional="1"
+    randomize="0"
+    translateable="0"
+    where="none">
+      <title>Straightliner Check</title>
+      <row label="r1">Bad open ends</row>
+      <row label="r2">Not bad open ends</row>
+    </checkbox>
+
+    <text 
+    label="openEndFlagFailedQuestions"
+    randomize="0"
+    size="25"
+    translateable="0"
+    where="none">
+      <title>List open end questions failing check:</title>
+    </text>
+  </block>
+
+  <block label="blkQualityCheckTracking" builder:title="Quality Check Tracking Questions">
+    <radio 
+    label="straightlinerCheck"
+    optional="1"
+    randomize="0"
+    translateable="0"
+    where="none">
+      <title>Straightliner Check</title>
+      <row label="r1">Failed</row>
+      <row label="r2">Passed</row>
+    </radio>
+
+    <radio 
+    label="speederAutoCheck"
+    optional="1"
+    randomize="0"
+    translateable="0"
+    where="none">
+      <title>Speeder Auto Check</title>
+      <row label="r1">Failed</row>
+      <row label="r2">Passed</row>
+      <row label="r3">Server Call Failed</row>
+    </radio>
+
+    <suspend/>
+
+    <exec>
+#######################################
+# drop marker  
+#######################################
+
+if straightlinerCheck.r1:
+  setMarker('straightlinerAuto')
+
+elif speederAutoCheck.r1:
+  setMarker('speederAutoCheck')
+
+elif p.qs['term']==1 and hQualityScoreAnalyze.r1.any and float(hQualityScoreAnalyze.r1.val) lt 20:
+    setMarker('qualityScore')
+    </exec>
+
+    <suspend/>
+
+    <term label="SpeederFail" cond="hasMarker('speederAuto')">Speeder Check Failed</term>
+
+    <term label="SpeederAutoFail" cond="hasMarker('speederAutoCheck')">Speeder Auto Check Failed</term>
+
+    <term label="SlowPokeFail" cond="hasMarker('slowpokeAuto')">SlowPoke Check Failed</term>
+
+    <term label="StraightlinerFail" cond="hasMarker('straightlinerAuto')">Straightliner Check Failed</term>
+
+    <term label="BadVerbsFail" cond="hasMarker('badopenAuto')">Verbatim Check Failed</term>
+
+    <term label="QualityFail" cond="hasMarker('failedAuto')">Quality Check Failed</term>
+
+    <term label="QualityScoreCheckTerm" cond="hasMarker('qualityScore')">QualityScore Check Failed</term>
+
+    <suspend/>
+
+    <exec when="init">
+#######################################
+# Quality Checks Functions
+#######################################
+
+
+
+def isStraightliner():
+    if tplStraightlinerSettings.r0.val == '1':
+        #######################################
+        # Update straightliner check settings
+        #######################################
+
+        questions = [q4, q5, q6]               ##### grids to checks
+        numbRequiredGridsToFail = 2       ##### number of grids respondent need to fail at
+        
+        #######################################     
+        # Example how to add other checks   
+        ####################################### 
+        #otherFailed = 0
+        #if not q1.r1.c2:
+        #   otherFailed = 1
+        
+        straightlinerCheck.val = straightlinerCheck.r2.index
+        
+        gridsFailed = 0
+        for q in questions:
+            sl = True
+            pval = None
+            rowcount = 0
+            for r in q.rows: 
+                if r.any:
+                    if  pval is not None and r.val != pval:   # not first answered row
+                        sl = False
+                        break
+                    pval = r.val
+                    rowcount += 1
+
+            if rowcount &gt; 1 and sl:           #if more than 1 row and straightliner
+                gridsFailed += 1
+                     
+        #######################################     
+        # Example how to add other checks to condition
+        ####################################### 
+        # if gridsFailed &gt;= numbRequiredGridsToFail or otherFailed:
+                                
+        if gridsFailed &gt;= numbRequiredGridsToFail:
+            straightlinerCheck.val = straightlinerCheck.r1.index
+            
+
+def isSpeeder():  
+    quota_cells = gv.survey.root.quota.getQuotaCells()
+    current, limit, overquota = quota_cells["/Settings/Seconds"]
+    p.minTime = limit
+    
+    speederAuto.val = speederAuto.r2.index
+
+    if timeSpent() lt p.minTime:
+        speederAuto.val = speederAuto.r1.index
+
+def isSpeederAutoCheck():
+
+  current, limit, overquota = gv.survey.root.quota.getQuotaCells()["/Settings/Seconds"]
+  
+  if limit == 0:
+    speederAutoCheck.val = speederAutoCheck.r2.index 
+
+    if int(medianTime.r2.val) &gt;= int(tplSpeederAutoCheckSettings.r2.val): #check # of completes to date
+      mTime = int(medianTime.r1.val) * float(tplSpeederAutoCheckSettings.r1.val) #check median time
+      print "mTIME:"
+      print mTime
+
+      if timeSpent() lt mTime:
+        speederAutoCheck.val = speederAutoCheck.r1.index
+
+    
+#######################################
+# Utility Functions
+#######################################
+def tplShow():
+  return settings=='test' or gv.survey.root.state == 'live'
+  
+# 
+#######################################
+
+def simpleJsonLoads(s):
+  #VERY SIMPLE JSON DECODER FOR SPEEDER API
+  import re
+  regex = re.compile('[^0-9a-zA-Z:]*')
+  returnObj = {}
+  s = s.replace('{','')
+  s = s.replace('}','')
+
+  tempArr = s.split(',')
+  for tempAtt in tempArr:
+    tempAtt = regex.sub("",tempAtt)
+    curArr = tempAtt.split(':')
+    returnObj[curArr[0]] = curArr[1]
+      
+  return returnObj
+    </exec>
+  </block>
+</block>
+
+<suspend/>
+</survey>
