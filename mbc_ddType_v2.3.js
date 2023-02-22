@@ -250,7 +250,7 @@ jQuery.mbc_ddType = function( settings ) {
 						if (settings.debug) console.log("============original glazed(2)===================");
 					    if (settings.debug) console.log(sum.total_cost,sortdump,excess_size);
 					} else {
-						console.log("here here",assorted)
+
 					    if ( originalglazed >  0 ){ //assorted with originzal glazed
 								bIsAssorted = true;
 								if ( !(originalglazed==3|| originalglazed==6 || originalglazed==12)){
@@ -262,7 +262,7 @@ jQuery.mbc_ddType = function( settings ) {
 									}
 								}
 						} else { //assorted codes only
-							console.log("--- here");
+
 							if (uniq(assorted_code).length > 1){bIsAssorted = true;}
 						}							
 					}
@@ -293,7 +293,7 @@ jQuery.mbc_ddType = function( settings ) {
 								   assorted_excess = newsort.excess;
 								   sortdump.push(newsort)
 								}
-								console.log(sortdump)
+
 								var R_Types = sortdump.map( n=> n.type);
 								var R_Size =  sortdump.map( n=> n.size);
 							
@@ -574,7 +574,7 @@ jQuery.mbc_ddType = function( settings ) {
 					packing_details["excess"]  = number_of_items%_type;
 					console.log(objArray)
 					for (i=0;i<_type;i++){
-
+						
 						if (objArray[i] > 2.09)  packing_details["special"]  += 1;
 					}
 
