@@ -175,7 +175,7 @@ jQuery.mbc_ddType = function( settings ) {
 
 		   if ( jQuery(".liSelection[data-class!='E'][data-value!='0']").length > 0 ) { jQuery(".btn.right").removeClass("disabled") } else {  jQuery(".btn.right").addClass("disabled") }
 		}
-		
+
 		function calculate(){
 			var sum = {
 				total_cost:0,
@@ -233,7 +233,7 @@ jQuery.mbc_ddType = function( settings ) {
 					var assorted_code = [];
 					var bIsAssorted = true;
 					var assorted_excess = 0;
-					var upcharge = 0;
+					let upcharge = 0;
 					var upcharge_rate=0.30;
 					jQuery(".liSelection[data-class='C'][data-value!='0']").each( function(){    
 							var thisprice = parseFloat(jQuery(this).attr("data-price"));
@@ -280,18 +280,19 @@ jQuery.mbc_ddType = function( settings ) {
 							
 							var packing_types = settings.packing_types;
 							var number_of_items = assorted.length;
-							var discount = settings.discounts.assorted;	
-							
+							var discount = settings.discounts.assorted;
 							var lowestpack = (packing_types[packing_types.length -1] - 1);
 							var sortdump = [];
-							var initsort = sortpacking_v2(assorted,number_of_items, packing_types);
+							var initsort = sortpacking_v2(0, assorted,number_of_items, packing_types);
 								sortdump.push(initsort);
 								assorted_excess = initsort.excess;
+							    upcharge+=initsort.special;
 								
 								while ( assorted_excess >  lowestpack) {
-								   var newsort = sortpacking_v2(assorted,assorted_excess, packing_types)
+								   var newsort = sortpacking_v2((assorted.length-assorted_excess),assorted,assorted_excess, packing_types)
 								   assorted_excess = newsort.excess;
 								   sortdump.push(newsort)
+									upcharge+=newsort.special;
 								}
 
 								var R_Types = sortdump.map( n=> n.type);
@@ -314,9 +315,10 @@ jQuery.mbc_ddType = function( settings ) {
 								}
 								sum.total_cost+=newexcess;
 								//check for upcharge
-								jQuery.each(sortdump, function(i,thisval){
+								/*jQuery.each(sortdump, function(i,thisval){
 									upcharge+=thisval.special;
-								});
+								});*/
+								if (settings.debug) console.log("MMMMMMMMMMM",upcharge)
 								sum.total_cost+=(upcharge*upcharge_rate);	
 								if (settings.debug) console.log("============assorted===================");
 							    if (settings.debug) console.log(sum.total_cost,sortdump,assorted_excess);								
@@ -560,7 +562,7 @@ jQuery.mbc_ddType = function( settings ) {
       	});
     	return packing_details;
 		}
-		function sortpacking_v2(objArray,number_of_items, packing_types) {
+		function sortpacking_v2(myoffset,objArray,number_of_items, packing_types) {
 			var packing_details = {
 				"type": 0,
 				"size": 0,
@@ -572,10 +574,10 @@ jQuery.mbc_ddType = function( settings ) {
 					packing_details["type"]    = _type;
 					packing_details["size"]    = Math.floor(number_of_items/_type);
 					packing_details["excess"]  = number_of_items%_type;
-					console.log(objArray)
-					for (i=0;i<_type;i++){
-						
-						if (objArray[i] > 2.09)  packing_details["special"]  += 1;
+					if (settings.debug) console.log("+++++++",objArray,myoffset,(myoffset + _type)-1)
+					for (i=myoffset;i<=((myoffset + _type)-1);i++){
+						if (settings.debug) console.log("$$$$$$$",objArray[i])
+						if (parseFloat(objArray[i]) > 2.09)  packing_details["special"]  += 1;
 					}
 
 					return false; /*break loop*/
