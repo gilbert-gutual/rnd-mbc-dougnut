@@ -281,13 +281,13 @@ jQuery.mbc_ddType = function( settings ) {
 							var discount = settings.discounts.assorted;
 							var lowestpack = (packing_types[packing_types.length -1] - 1);
 							var sortdump = [];
-							var initsort = sortpacking_v2(0, assorted,number_of_items, packing_types);
+							var initsort = sortpacking_v2(0, assorted.sort(function(a, b){return b-a}),number_of_items, packing_types);
 								sortdump.push(initsort);
 								assorted_excess = initsort.excess;
 							    upcharge+=initsort.special;
 								
 								while ( assorted_excess >  lowestpack) {
-								   var newsort = sortpacking_v2((assorted.length-assorted_excess),assorted,assorted_excess, packing_types)
+								   var newsort = sortpacking_v2((assorted.length-assorted_excess),assorted.sort(function(a, b){return b-a}),assorted_excess, packing_types)
 								   assorted_excess = newsort.excess;
 								   sortdump.push(newsort)
 									upcharge+=newsort.special;
@@ -307,8 +307,8 @@ jQuery.mbc_ddType = function( settings ) {
 								//sum.total_cost+=(excess_size * p_originalglazed);	
 								var newexcess = 0;
 								if (excess_size>0){
-									for(i=0;i<excess_size;i++){
-										newexcess+=assorted.sort()[i];
+									for(i=(assorted.length-excess_size);i<=(assorted.length-excess_size);i++){
+										newexcess+=assorted.sort(function(a, b){return b-a})[i];
 									}
 								}
 								sum.total_cost+=newexcess;
@@ -377,7 +377,7 @@ jQuery.mbc_ddType = function( settings ) {
 								var newexcess = 0;
 								if (special_excess>0){
 									for(i=0;i<special_excess;i++){
-										newexcess+=specialtyplus.sort()[i];
+										newexcess+=specialtyplus.sort(function(a, b){return b-a})[i];
 									}
 								}
 								if (settings.debug) console.log(newexcess)
@@ -503,7 +503,7 @@ jQuery.mbc_ddType = function( settings ) {
 								var newexcess = 0;
 								if (m_originalglazed_excess>0){
 									for(i=0;i<m_originalglazed_excess;i++){
-										newexcess+=m_assorted.sort()[i];
+										newexcess+=m_assorted.sort(function(a, b){return b-a})[i];
 									}
 								}
 								sum.total_cost+=newexcess;
