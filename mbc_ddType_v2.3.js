@@ -307,8 +307,11 @@ jQuery.mbc_ddType = function( settings ) {
 								//sum.total_cost+=(excess_size * p_originalglazed);	
 								var newexcess = 0;
 								if (excess_size>0){
-									for(i=(assorted.length-excess_size);i<=(assorted.length-excess_size);i++){
-										newexcess+=assorted.sort(function(a, b){return b-a})[i];
+									let _tail = assorted.length;
+									for(i=0;i<excess_size;i++){
+										_tail--;
+										if (settings.debug) console.log("************",i,_tail)
+										newexcess+=assorted.sort(function(a, b){return b-a})[_tail];
 									}
 								}
 								sum.total_cost+=newexcess;
