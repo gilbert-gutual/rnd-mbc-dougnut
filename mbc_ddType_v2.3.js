@@ -255,8 +255,6 @@ jQuery.mbc_ddType = function( settings ) {
 								bIsAssorted = true;
 								if ( !(originalglazed==3|| originalglazed==6 || originalglazed==12)){
 									sum.total_cost = 0; //zero out calculation for glazed
-
-
 									for(i=1;i<=originalglazed;i++){
 										assorted.push(p_originalglazed);
 									}
@@ -310,7 +308,7 @@ jQuery.mbc_ddType = function( settings ) {
 								var newexcess = 0;
 								if (excess_size>0){
 									for(i=0;i<excess_size;i++){
-										newexcess+=assorted[i];
+										newexcess+=assorted.sort()[i];
 									}
 								}
 								sum.total_cost+=newexcess;
@@ -379,7 +377,7 @@ jQuery.mbc_ddType = function( settings ) {
 								var newexcess = 0;
 								if (special_excess>0){
 									for(i=0;i<special_excess;i++){
-										newexcess+=specialtyplus[i];
+										newexcess+=specialtyplus.sort()[i];
 									}
 								}
 								if (settings.debug) console.log(newexcess)
@@ -448,7 +446,7 @@ jQuery.mbc_ddType = function( settings ) {
 								m_assorted_code.push(thiscode);
 							}
 					});
-					console.log(">>",uniq(m_assorted_code).length);
+					if (settings.debug) console.log(">>",uniq(m_assorted_code).length);
 					if (m_assorted.length==0){
 						sum.total_cost+=(m_originalglazed_excess * p_m_originalglazed);	
 						if (settings.debug) console.log("============m original glazed(1)===================");
@@ -505,7 +503,7 @@ jQuery.mbc_ddType = function( settings ) {
 								var newexcess = 0;
 								if (m_originalglazed_excess>0){
 									for(i=0;i<m_originalglazed_excess;i++){
-										newexcess+=m_assorted[i];
+										newexcess+=m_assorted.sort()[i];
 									}
 								}
 								sum.total_cost+=newexcess;
@@ -613,6 +611,4 @@ jQuery.mbc_ddType = function( settings ) {
 			}
 		  }, 1000);
 		}
-    
-  
 }
