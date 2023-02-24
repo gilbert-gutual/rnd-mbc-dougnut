@@ -253,7 +253,12 @@ jQuery.mbc_ddType = function( settings ) {
 
 					    if ( originalglazed >  0 ){ //assorted with originzal glazed
 								bIsAssorted = true;
-								if ( !(originalglazed==3|| originalglazed==6 || originalglazed==12)){
+								let B_mixed = 0;
+								if  (originalglazed==3 && (assorted.length<9) ) B_mixed++;
+								if  (originalglazed==6) B_mixed++;
+								if  (originalglazed==12) B_mixed++;
+
+							    if (B_mixed==0){
 									sum.total_cost = 0; //zero out calculation for glazed
 									for(i=1;i<=originalglazed;i++){
 										assorted.push(p_originalglazed);
