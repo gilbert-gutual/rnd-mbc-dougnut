@@ -255,15 +255,32 @@ jQuery.mbc_ddType = function( settings ) {
 								bIsAssorted = true;
 								let B_mixed = 0;
 								if  (originalglazed==3 && (assorted.length<9) ) B_mixed++;
-								if  (originalglazed==6) B_mixed++;
+								if  (originalglazed==6 && (assorted.length<6) ) B_mixed++;
 								if  (originalglazed==12) B_mixed++;
+							    if  (originalglazed==24  && (assorted.length<48)  ) B_mixed++;
+								if  (originalglazed==36  && (assorted.length<64)  ) B_mixed++;
 
-							    if (B_mixed==0){
+								let B_mixed_Type2 = 0;
+								if (originalglazed==15) B_mixed_Type2=3;
+								if (originalglazed==18) B_mixed_Type2=6;
+							    if (originalglazed==27) B_mixed_Type2=3;
+								if (originalglazed==30) B_mixed_Type2=6;
+
+							    if (B_mixed==0 && B_mixed_Type2==0){
 									sum.total_cost = 0; //zero out calculation for glazed
 									for(i=1;i<=originalglazed;i++){
 										assorted.push(p_originalglazed);
 									}
 								}
+
+								if (B_mixed_Type2>0) {
+									    sum.total_cost -= settings.discounts.glazed[B_mixed_Type2]
+									for(i=1;i<=B_mixed_Type2;i++){
+										assorted.push(p_originalglazed);
+									}
+								}
+
+
 						} else { //assorted codes only
 
 							if (uniq(assorted_code).length > 1){bIsAssorted = true;}
