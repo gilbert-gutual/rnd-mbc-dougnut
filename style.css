@@ -484,7 +484,7 @@ input[type=number] {
 }
 
 .tooltip-inner {
-    background: #375623 !important;
+    /*background: #375623 !important;*/
     color: #fff;
     font-weight: 900 !important;
     max-width: 200px !important;
